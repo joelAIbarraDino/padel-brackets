@@ -37,3 +37,13 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
+
+export interface Tournament{
+    id:number,
+    type:number,
+    scheduled_event:string,
+    admission_price:number,
+    status:string,
+    result:string
+
+}

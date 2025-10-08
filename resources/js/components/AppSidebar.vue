@@ -2,6 +2,7 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
+import { Medal } from 'lucide-vue-next';
 import {
     Sidebar,
     SidebarContent,
@@ -23,7 +24,11 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
+    {
+        title: 'Torneos',
+        href: '/tournaments',
+        icon: Medal,
+    },];
 
 const footerNavItems: NavItem[] = [
     {
@@ -58,7 +63,7 @@ const footerNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
-            <NavFooter :items="footerNavItems" />
+            <!-- <NavFooter :items="footerNavItems" /> -->
             <NavUser />
         </SidebarFooter>
     </Sidebar>
