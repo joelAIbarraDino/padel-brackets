@@ -18,7 +18,7 @@ const form = ref<Partial<{ type: number; scheduled_event: string; admission_pric
   type: undefined,
   scheduled_event: undefined,
   admission_price: undefined,
-  status: undefined,
+  status: 'activo',
 });
 
 const resetForm = () =>{
@@ -40,19 +40,32 @@ const submit = () =>{
             <form @submit.prevent="submit" class="space-y-6 max-w-lg">
                 <div v-for="(label, key) in tournamentAttributes" :key="key" class="space-y-2">
                     <Label :for="key">{{label}}</Label>
-                    <Input 
-                        :id="key"
-                        v-model="form[key]"
-                        :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
-                        :placeholder="label"
-                    />
+                    <template v-if="key === 'status'">
+                        <select
+                            :id="key"
+                            v-model="form.status"
+                            class="w-full rounded border px-3 py-2"
+                        >
+                            <option value="" disabled>Selecciona un estatus</option>
+                            <option value="activo" selected>Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                            <option value="finalizado">Finalizado</option>
+                        </select>
+                    </template>
+                    <template v-else>
+                        <Input 
+                            :id="key"
+                            v-model="form[key]"
+                            :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
+                            :placeholder="label"
+                        />
+                    </template>
                 </div>
 
                 <div class="flex gap-4">
                     <Button type="submit" class="bg-indigo-500 hover:bg-indigo-600">Save</Button>
                     <Button as="a" href="/tournaments" variant="outline">Cancel</Button>
                 </div>
-
             </form>
         </div>
     </AppLayout>

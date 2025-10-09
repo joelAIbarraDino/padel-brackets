@@ -53,12 +53,26 @@ const submit = () =>{
             <form @submit.prevent="submit" class="space-y-6 max-w-lg">
                 <div v-for="(label, key) in tournamentAttributes" :key="key" class="space-y-2">
                     <Label :for="key">{{label}}</Label>
-                    <Input 
-                        :id="key"
-                        v-model="form[key]"
-                        :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
-                        :placeholder="label"
-                    />
+                    <template v-if="key === 'status'">
+                        <select
+                            :id="key"
+                            v-model="form.status"
+                            class="w-full rounded border px-3 py-2"
+                        >
+                            <option value="" disabled>Selecciona un estatus</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                            <option value="finalizado">Finalizado</option>
+                        </select>
+                    </template>
+                    <template v-else>
+                        <Input 
+                            :id="key"
+                            v-model="form[key]"
+                            :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
+                            :placeholder="label"
+                        />
+                    </template>
                 </div>
 
                 <div class="flex gap-4">

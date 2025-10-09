@@ -37,7 +37,6 @@ const deleteTournament = async (id: number)=> {
         preserveScroll:true,
         onSuccess:()=>{
             router.visit('/tournaments', {replace:true});
-            Swal.fire('¡Eliminado!', 'El torneo ha sido eliminado.', 'success');
         },
         onError:(errors)=>{
             console.error("Error al eliminar el registro: ", errors);
