@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
-            $table->integer('type');
+            $table->unsignedBigInteger('type');
             $table->timestamp('scheduled_event');
             $table->decimal('admission_price', 8, 2);
-            $table->string('status', 15);
-            $table->json('result');
+            $table->string('status', 15)->default("activo");
+            $table->json('result')->nullable();
+            $table->timestamps();
+
+            $table->foreign('type')->references('id')->on('type_tournaments');
         });
     }
 
