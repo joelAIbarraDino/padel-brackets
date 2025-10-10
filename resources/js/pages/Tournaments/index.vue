@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import { Pencil, Trash, CirclePlus, Import, Key } from "lucide-vue-next";
+import { Pencil, Trash, CirclePlus} from "lucide-vue-next";
 import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head, usePage, Link, router } from '@inertiajs/vue3';
@@ -53,12 +53,12 @@ const deleteTournament = async (id: number)=> {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
             <div class="flex">
-                <Button as-child size="sm" class="bg-indigo-500 text-white hover:bg-indigo-700">
+                <Button as-child class="bg-lime-600 text-white hover:bg-lime-700">
                     <Link href="/tournaments/create"><CirclePlus/> Crear</Link>
                 </Button>
             </div>
             
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min" >
+            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min shadow-xl" >
                 <Table>
                     <TableCaption>Lista de torneos.</TableCaption>
                     <TableHeader>
@@ -77,13 +77,13 @@ const deleteTournament = async (id: number)=> {
                             <TableCell>$ {{tournament.admission_price}}</TableCell>
                             <TableCell>{{tournament.status}}</TableCell>
                             <TableCell class="flex gap-2 justify-start items-center ">
-                                <Button as-child size="sm" class="bg-blue-500 hover:bg-blue-700 text-white">
+                                <Button as-child size="sm" class="bg-cyan-600 hover:bg-cyan-700 text-white">
                                     <Link :href="`/tournaments/${tournament.id}/edit`">
                                         <Pencil />
                                     </Link>
                                 </Button>
 
-                                <Button size="sm" class="bg-rose-500 text-white hover:bg-rose-700" @click="deleteTournament(tournament.id)"  >
+                                <Button size="sm" class="bg-red-700 text-white hover:bg-red-600" @click="deleteTournament(tournament.id)"  >
                                     <Trash/>
                                 </Button>
 
