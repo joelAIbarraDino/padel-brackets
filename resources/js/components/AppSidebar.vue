@@ -2,7 +2,7 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Medal } from 'lucide-vue-next';
+import { Medal, Trophy, Group} from 'lucide-vue-next';
 import {
     Sidebar,
     SidebarContent,
@@ -15,20 +15,29 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { BookOpen, Folder} from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
-const mainNavItems: NavItem[] = [
+const mainNavItems = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        title: "Torneos",
+        url: "#",
+        icon: Trophy,
+        isActive: true,
+        items: [
+            {
+                title: "Torneos registrados",
+                url: "/tournaments",
+                icon: Medal
+            },
+            {
+                title: 'Tipo de torneos',
+                url: '/type-tournaments',
+                icon: Group
+            },
+        ]
     },
-    {
-        title: 'Torneos',
-        href: '/tournaments',
-        icon: Medal,
-    },];
+];
 
 const footerNavItems: NavItem[] = [
     {
