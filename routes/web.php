@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\TypeTournamentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,6 +23,16 @@ Route::middleware('auth', 'verified')->group(function(){
     Route::put('/tournaments/{tournament}', [TournamentController::class, 'update'])->name('tournaments.update');
     Route::delete('/tournaments/{tournament}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
 
+});
+
+Route::middleware('auth', 'verified')->group(function(){
+    Route::get('/type-tournaments', [TypeTournamentController::class, 'index'])->name('typeTournaments.index');
+    Route::get('/type-tournaments/create', [TypeTournamentController::class, 'create'])->name('typeTournaments.create');
+    Route::post('/type-tournaments', [TypeTournamentController::class, 'store'])->name('typeTournaments.store');
+    Route::get('/type-tournaments/{typeTournament}', [TypeTournamentController::class, 'show'])->name('typeTournaments.show');
+    Route::get('/type-tournaments/{typeTournament}/edit', [TypeTournamentController::class, 'edit'])->name('typeTournaments.edit');
+    Route::put('/type-tournaments/{typeTournament}', [TypeTournamentController::class, 'update'])->name('typeTournaments.update');
+    Route::delete('/type-tournaments/{typeTournament}', [TypeTournamentController::class, 'destroy'])->name('typeTournaments.destroy');
 });
 
 require __DIR__.'/settings.php';

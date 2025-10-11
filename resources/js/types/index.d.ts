@@ -47,3 +47,8 @@ export interface Tournament{
     result:string
 
 }
+
+export interface TypeTournament{
+    id:number,
+    name:string
+}

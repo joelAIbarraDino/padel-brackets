@@ -1,13 +1,31 @@
 <script setup lang="ts">
-import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import { Pencil, Trash, CirclePlus} from "lucide-vue-next";
-import { Button } from '@/components/ui/button';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Head, usePage, Link, router } from '@inertiajs/vue3';
-import { Tournament, BreadcrumbItem, AppPageProps} from "@/types";
-import {computed} from 'vue';
-import Swal from 'sweetalert2';
 
+import ButtonNewRegister from '@/components/ButtonNewRegister.vue';
+import { Tournament, BreadcrumbItem, AppPageProps} from "@/types";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Head, usePage, router } from '@inertiajs/vue3';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Pencil, Trash} from "lucide-vue-next";
+import Swal from 'sweetalert2';
+import {computed} from 'vue';
+
+import TableRecordButton from '@/components/TableRecordButton.vue';
+import TableActions from '@/components/TableActions.vue';
+import TableRecords from '@/components/TableRecords.vue';
+
+
+const breadcrumbs: BreadcrumbItem[] = [{title:'Torneos', href:'/tournaments'}]
+
+const tableAttributes = {
+    caption: "Lista de torneos",
+    columnsHead:[
+        "Tipo de torneo",
+        "Fecha de evento",
+        "Precio de admisión",
+        "Estado",
+        "Acciones"
+    ]
+};
 interface TournamentPageProps extends AppPageProps{
     tournaments:Tournament[];
 }
@@ -15,7 +33,6 @@ interface TournamentPageProps extends AppPageProps{
 const {props} = usePage<TournamentPageProps>();
 const tournaments = computed(() => props.tournaments);
 
-const breadcrumbs: BreadcrumbItem[] = [{title:'Torneos', href:'/tournaments'}]
 
 //eliminar registro
 const deleteTournament = async (id: number)=> {
@@ -52,46 +69,39 @@ const deleteTournament = async (id: number)=> {
     <Head title="Torneos"/>
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <div class="flex">
-                <Button as-child class="bg-lime-600 text-white hover:bg-lime-700">
-                    <Link href="/tournaments/create"><CirclePlus/> Crear</Link>
-                </Button>
-            </div>
+
+            <ButtonNewRegister url="/tournaments/create" text="Crear"></ButtonNewRegister>
             
-            <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min shadow-xl" >
-                <Table>
-                    <TableCaption>Lista de torneos.</TableCaption>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Tipo de torneo</TableHead>
-                            <TableHead>Fecha de evento</TableHead>
-                            <TableHead>Precio de admisión</TableHead>
-                            <TableHead>Estado</TableHead>
-                            <TableHead>Acciones</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow v-for="tournament in tournaments" :Key="tournament.id " >
-                            <TableCell>{{tournament.type}}</TableCell>
-                            <TableCell>{{tournament.scheduled_event}}</TableCell>
-                            <TableCell>$ {{tournament.admission_price}}</TableCell>
-                            <TableCell>{{tournament.status}}</TableCell>
-                            <TableCell class="flex gap-2 justify-start items-center ">
-                                <Button as-child size="sm" class="bg-cyan-600 hover:bg-cyan-700 text-white">
-                                    <Link :href="`/tournaments/${tournament.id}/edit`">
-                                        <Pencil />
-                                    </Link>
-                                </Button>
+            <TableRecords :table-attributes="tableAttributes">
 
-                                <Button size="sm" class="bg-red-700 text-white hover:bg-red-600" @click="deleteTournament(tournament.id)"  >
-                                    <Trash/>
-                                </Button>
+                <TableRow v-for="tournament in tournaments" :Key="tournament.id">
+                    <TableCell>{{tournament.type}}</TableCell>
+                    <TableCell>{{tournament.scheduled_event}}</TableCell>
+                    <TableCell>$ {{tournament.admission_price}}</TableCell>
+                    <TableCell>{{tournament.status}}</TableCell>
+                    
+                    <TableActions>
+                        <TableRecordButton
+                            type="url"
+                            color="bg-cyan-600"
+                            hover="bg-cyan-700"
+                            :icon=Pencil
+                            :action="`/tournaments/${tournament.id}/edit`"
+                        ></TableRecordButton>
 
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </div>
+                        <TableRecordButton
+                            type="function"
+                            color="bg-red-700"
+                            hover="bg-red-600"
+                            :icon=Trash
+                            :action="() => deleteTournament(tournament.id)"
+                        ></TableRecordButton>
+
+                    </TableActions>    
+
+                </TableRow>
+
+            </TableRecords>
         </div>
     </AppLayout>
 </template>
