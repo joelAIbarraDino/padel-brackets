@@ -24,7 +24,6 @@ interface TypeTournamentsPageProps extends AppPageProps{
 //convertimos a objeto para el renderizado
 const {props} = usePage<TypeTournamentsPageProps>();
 const typeTournaments = computed(() => props.typeTournaments);
-
 //funcion para eliminar un registro
 const deleteTypeTournament = async(id:number)=>{
     const result = await Swal.fire({

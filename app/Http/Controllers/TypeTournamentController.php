@@ -75,10 +75,9 @@ class TypeTournamentController extends Controller
      */
     public function destroy(Type_tournament $typeTournament)
     {
-        $typeTournament->delete();
-
-        return Inertia::render('Tournaments/index', [
-            'typeTournaments'=>Type_tournament::all(),
-        ]);
+        if($typeTournament->tournaments()->count() == 0)
+            $typeTournament->delete();
+        
+        return redirect()->route('typeTournaments.index');
     }
 }
