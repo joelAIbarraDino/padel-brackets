@@ -14,7 +14,7 @@ class TypeTournamentController extends Controller
     public function index()
     {
         return Inertia::render('TypeTournaments/index', [
-            'typeTournamentes'=>Type_tournament::all(),
+            'typeTournaments'=>Type_tournament::all(),
         ]);
     }
 

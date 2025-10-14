@@ -2,11 +2,9 @@
 import {Table, TableBody} from "@/components/ui/table"
 import TableRecordHeader from "./TableRecordHeader.vue";
 
-defineProps<{
-    tableAttributes:{
-        caption: string,
-        columnsHead: string[]
-    }
+const props = defineProps<{
+    caption?: string,
+    columnsHead: string[]
 }>();
 
 </script>
@@ -14,7 +12,7 @@ defineProps<{
 <template>
     <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 dark:border-sidebar-border md:min-h-min shadow-xl" >
         <Table>
-            <TableRecordHeader :caption="tableAttributes.caption" :columns-name="tableAttributes.columnsHead"></TableRecordHeader>
+            <TableRecordHeader :caption="props.caption??'Lista de registros'" :columns-name="props.columnsHead"></TableRecordHeader>
             <TableBody>
                 <slot></slot>
             </TableBody>

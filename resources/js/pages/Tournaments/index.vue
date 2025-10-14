@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
 import ButtonNewRegister from '@/components/ButtonNewRegister.vue';
+import TableRecordButton from '@/components/tableRecords/TableRecordButton.vue';
+import TableActions from '@/components/tableRecords/TableActions.vue';
+import TableRecords from '@/components/tableRecords/TableRecords.vue';
+
 import { Tournament, BreadcrumbItem, AppPageProps} from "@/types";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Head, usePage, router } from '@inertiajs/vue3';
@@ -9,23 +13,17 @@ import { Pencil, Trash} from "lucide-vue-next";
 import Swal from 'sweetalert2';
 import {computed} from 'vue';
 
-import TableRecordButton from '@/components/TableRecordButton.vue';
-import TableActions from '@/components/TableActions.vue';
-import TableRecords from '@/components/TableRecords.vue';
-
 
 const breadcrumbs: BreadcrumbItem[] = [{title:'Torneos', href:'/tournaments'}]
 
-const tableAttributes = {
-    caption: "Lista de torneos",
-    columnsHead:[
-        "Tipo de torneo",
-        "Fecha de evento",
-        "Precio de admisión",
-        "Estado",
-        "Acciones"
-    ]
-};
+const columnsName = [
+    "Tipo de torneo", 
+    "Fecha de evento", 
+    "Precio de admisión", 
+    "Estado", 
+    "Acciones"
+];
+
 interface TournamentPageProps extends AppPageProps{
     tournaments:Tournament[];
 }
@@ -70,9 +68,9 @@ const deleteTournament = async (id: number)=> {
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
 
-            <ButtonNewRegister url="/tournaments/create" text="Crear"></ButtonNewRegister>
+            <ButtonNewRegister url="/tournaments/create" text="Crear"/>
             
-            <TableRecords :table-attributes="tableAttributes">
+            <TableRecords caption="Lista de torneos" :columnsHead="columnsName">
 
                 <TableRow v-for="tournament in tournaments" :Key="tournament.id">
                     <TableCell>{{tournament.type}}</TableCell>
@@ -87,7 +85,7 @@ const deleteTournament = async (id: number)=> {
                             hover="bg-cyan-700"
                             :icon=Pencil
                             :action="`/tournaments/${tournament.id}/edit`"
-                        ></TableRecordButton>
+                        />
 
                         <TableRecordButton
                             type="function"
@@ -95,7 +93,7 @@ const deleteTournament = async (id: number)=> {
                             hover="bg-red-600"
                             :icon=Trash
                             :action="() => deleteTournament(tournament.id)"
-                        ></TableRecordButton>
+                        />
 
                     </TableActions>    
 

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
+import { Form, FormHeader, FormBody, FormSubmit } from '@/components/form';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import { reactive, onMounted } from 'vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { BreadcrumbItem, Tournament } from '@/types';
-import { ArrowLeft, Save } from 'lucide-vue-next';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { reactive, onMounted } from 'vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {title:"Torneos", href:"/tournaments"},
@@ -49,41 +48,35 @@ const submit = () =>{
     <Head title="Editar torneo"/>
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex flex-1 flex-col gap-4 p-4 xl:w-1/2  md:w-3/4 w-11/12 mx-auto my-10 border rounded-md shadow-xl">
-            <div class="flex justify-between items-center  gap-2 flex-row ">
-                <h1 class="text-xl md:text-4xl font-black text-left">Editar torneo</h1>
-                <Button as="a" href="/tournaments" class="bg-cyan-600 hover:bg-cyan-700 dark:text-white"> <ArrowLeft/> Regresar</Button>
+        <Form>
+            <FormHeader title-form="Nuevo torneo" cancel-url="/tournaments"/>
+            
+            <FormBody :handle="submit">
+            <div v-for="(label, key) in tournamentAttributes" :key="key" class="space-y-2">
+                <Label :for="key" class="text-sm md:text-lg ">{{label}}</Label>
+                <template v-if="key === 'status'">
+                <select
+                    :id="key"   
+                    v-model="form.status"
+                    class="w-full rounded border px-3 py-2 dark:text-white dark:bg-zinc-900  "
+                >
+                    <option value="" disabled>Selecciona un estatus</option>
+                    <option value="activo" selected>Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                    <option value="finalizado">Finalizado</option>
+                </select>
+                </template>
+                <template v-else>
+                <Input 
+                    :id="key"
+                    v-model="form[key]"
+                    :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
+                    :placeholder="label"  
+                />
+                </template>
             </div>
-            <hr>
-            <form @submit.prevent="submit" class="space-y-6">
-                <div v-for="(label, key) in tournamentAttributes" :key="key" class="space-y-2">
-                    <Label :for="key" class="text-sm md:text-lg ">{{label}}</Label>
-                    <template v-if="key === 'status'">
-                        <select
-                            :id="key"
-                            v-model="form.status"
-                            class="w-full rounded border px-3 py-2 dark:text-white dark:bg-zinc-900  "
-                        >
-                            <option value="" disabled>Selecciona un estatus</option>
-                            <option value="activo" selected>Activo</option>
-                            <option value="inactivo">Inactivo</option>
-                            <option value="finalizado">Finalizado</option>
-                        </select>
-                    </template>
-                    <template v-else>
-                        <Input 
-                            :id="key"
-                            v-model="form[key]"
-                            :type="key==='type'?'number':key==='scheduled_event'?'datetime-local':key==='admission_price'?'number':'text'"
-                            :placeholder="label"  
-                        />
-                    </template>
-                </div>
-
-                <div class="flex gap-4 justify-start">
-                    <Button type="submit" class="bg-lime-600 hover:bg-lime-700 text-md dark:text-white" size="lg"><Save /> Save</Button>
-                </div>
-            </form>
-        </div>
+            <FormSubmit/>
+            </FormBody>
+        </Form>
     </AppLayout>
 </template>
