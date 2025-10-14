@@ -23,7 +23,7 @@ class TypeTournamentController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('TypeTournaments/create');
     }
 
     /**
@@ -31,7 +31,12 @@ class TypeTournamentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|string'
+        ]);
+
+        Type_tournament::create($request->all());
+        return redirect()->route('typeTournaments.index');
     }
 
     /**
@@ -45,24 +50,35 @@ class TypeTournamentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Type_tournament $typeTournament)
     {
-        //
+        return Inertia::render('TypeTournaments/edit', [
+            'typeTournament'=> $typeTournament
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Type_tournament $typeTournament)
     {
-        //
+        $request->validate([
+            'name'=>'required|string'
+        ]);
+
+        $typeTournament->update($request->all());
+        return redirect()->route('typeTournaments.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Type_tournament $typeTournament)
     {
-        //
+        $typeTournament->delete();
+
+        return Inertia::render('Tournaments/index', [
+            'typeTournaments'=>Type_tournament::all(),
+        ]);
     }
 }

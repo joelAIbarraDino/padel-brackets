@@ -9,6 +9,7 @@ import { Head, usePage, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Pencil, Trash} from "lucide-vue-next";
 import { computed } from 'vue';
+import Swal from 'sweetalert2';
 
 //breadcrumbs de la página
 const breadcrumbs: BreadcrumbItem[] = [{title:'Tipo de torneos', href:'/type-tournaments'}]
@@ -26,6 +27,29 @@ const typeTournaments = computed(() => props.typeTournaments);
 
 //funcion para eliminar un registro
 const deleteTypeTournament = async(id:number)=>{
+    const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    });
+
+    if(!result.isConfirmed)return;
+
+    router.delete(`/type-tournaments/${id}`, {
+        preserveScroll:true,
+        onSuccess:()=>{
+            router.visit('/type-tournaments', {replace:true});
+        },
+        onError:(errors)=>{
+            console.error("Error al eliminar el registro: ", errors);
+            Swal.fire('Error', 'No se pudo eliminar el tipo de torneo.', 'error');   
+        }
+    });
 
 }
 
