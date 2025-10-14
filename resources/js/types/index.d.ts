@@ -40,7 +40,11 @@ export type BreadcrumbItemType = BreadcrumbItem;
 
 export interface Tournament{
     id:number,
-    type:number,
+    type:number
+    type_tournament?: {
+        id: number,
+        name: string
+    },
     scheduled_event:string,
     admission_price:number,
     places:number,

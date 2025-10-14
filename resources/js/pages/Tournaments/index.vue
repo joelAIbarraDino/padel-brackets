@@ -73,7 +73,7 @@ const deleteTournament = async (id: number)=> {
             <TableRecords caption="Lista de torneos" :columnsHead="columnsName">
 
                 <TableRow v-for="tournament in tournaments" :Key="tournament.id">
-                    <TableCell>{{tournament.type}}</TableCell>
+                    <TableCell>{{tournament.type_tournament?.name || 'Sin tipo'}}</TableCell>
                     <TableCell>{{tournament.scheduled_event}}</TableCell>
                     <TableCell>$ {{tournament.admission_price}}</TableCell>
                     <TableCell>{{tournament.status}}</TableCell>
@@ -99,7 +99,7 @@ const deleteTournament = async (id: number)=> {
                             type="url"
                             color="bg-violet-700"
                             hover="bg-violet-600"
-                            :icon=Trash
+                            :icon=Users
                             :action="`#`"
                         />
 

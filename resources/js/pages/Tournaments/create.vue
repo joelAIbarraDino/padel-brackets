@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { AppPageProps, BreadcrumbItem, TypeTournament } from '@/types';
 import { RecordForm, RecordFormBody, RecordFormHeader, RecordFormSubmit } from '@/components/recordForm';
 import { computed } from 'vue';
+import Swal from 'sweetalert2';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {title:"Torneos", href:"/tournaments"},
@@ -33,7 +34,8 @@ const form = useForm({
 function submit(){
   form.post('/tournaments',{
     preserveScroll:true,
-    onSuccess: () => form.reset()
+    onSuccess: () => form.reset(),
+    onError:() => Swal.fire('Error', 'No se pudo registrar el torneo.', 'error')
   })
 }
 

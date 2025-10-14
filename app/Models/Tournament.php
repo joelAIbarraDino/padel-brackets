@@ -15,4 +15,8 @@ class Tournament extends Model
         'places',
         'result'
     ];
+
+    public function type_tournament(){
+        return $this->belongsTo(Type_tournament::class, 'type');
+    }
 }
