@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tournament;
+use App\Models\Type_tournament;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,7 +24,9 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Tournaments/create');
+        return Inertia::render('Tournaments/create', [
+            'typeTournaments'=>Type_tournament::all()
+        ]);
     }
 
     /**
@@ -35,6 +38,7 @@ class TournamentController extends Controller
             'type'=>'required|numeric',
             'scheduled_event'=>'required|string',
             'admission_price'=>'required|numeric|min:0',
+            'places'=>'required|numeric|min:0|max:20',
             'status'=>'nullable|string',
             'result'=>'nullable|string'
         ]);
@@ -57,7 +61,8 @@ class TournamentController extends Controller
     public function edit(Tournament $tournament)
     {
         return Inertia::render('Tournaments/edit', [
-            'tournament' => $tournament
+            'tournament' => $tournament,
+            'typeTournaments'=>Type_tournament::all()
         ]);
     }
 
@@ -70,6 +75,7 @@ class TournamentController extends Controller
             'type'=>'required|numeric',
             'scheduled_event'=>'required|string',
             'admission_price'=>'required|numeric|min:0',
+            'places'=>'required|numeric|min:0|max:20',
             'status'=>'nullable|string',
             'result'=>'nullable|string'
         ]);

@@ -12,6 +12,7 @@ class Tournament extends Model
         'scheduled_event',
         'admission_price',
         'status',
+        'places',
         'result'
     ];
 }

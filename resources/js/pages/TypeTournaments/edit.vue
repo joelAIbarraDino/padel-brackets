@@ -1,59 +1,53 @@
 <script setup lang="ts">
-import { Form, FormHeader, FormBody, FormSubmit } from '@/components/form';
-import { Head, router, usePage } from '@inertiajs/vue3';
-import { BreadcrumbItem, TypeTournament } from '@/types';
+
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import InputError from '@/components/InputError.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { reactive, onMounted } from 'vue';
+import { Label } from '@/components/ui/label';
+import { BreadcrumbItem, TypeTournament } from '@/types';
+import { RecordForm, RecordFormBody, RecordFormHeader, RecordFormSubmit } from '@/components/recordForm';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {title:"Torneos", href:"/tournaments"},
-    {title:"Editar", href:"#"}
+    {title:"Tipo de torneos", href:"/type-tournaments"},
+    {title:"Crear", href:"#"}
 ];
 
 const {props} = usePage();
-const tournament = props.typeTournament as TypeTournament;
+const typeTournament = props.typeTournament as TypeTournament;
 
-const attributes = {name:'Nombre de tipo de torneo'};
-
-const form = reactive<Partial<{ name: string}>>({
-    name:undefined
+const form = useForm({
+  name:typeTournament.name
 });
 
-onMounted(()=>{
-    form.name = tournament.name??undefined
-});
-
-const resetForm = () =>{
-    form.name = tournament.name
-}
-
-const submit = () =>{
-    router.put(`/type-tournaments/${tournament.id}`, form, {onSuccess:resetForm})
+function submit(){
+  form.put(`/type-tournaments/${typeTournament.id}`,{
+    preserveScroll:true,
+    onSuccess: () => form.reset()
+  })
 }
 
 </script>
 
 <template>
     <Head title="Editar tipo de torneo"/>
-
     <AppLayout :breadcrumbs="breadcrumbs">
-      <Form>
-        <FormHeader title-form="Editar tipo de torneo" cancel-url="/type-tournaments"/>
-        
-        <FormBody :handle="submit">
-          <div v-for="(label, key) in attributes" :key="key" class="space-y-2">
-            <Label :for="key" class="text-sm md:text-lg ">{{label}}</Label>
-            <Input 
-            :id="key"
-            v-model="form[key]"
-            :type="'text'"
-            :placeholder="label"  
-            />
-          </div>
-          <FormSubmit/>
-        </FormBody>
-      </Form>
+      <RecordForm>
+        <RecordFormHeader title-form="Editar registro" return-url="/type-tournaments"/>
+        <RecordFormBody  :handle="submit">
+            <div class="grid gap-1">
+              <Label for="name">Tipo de torneo</Label>
+              <Input
+                  id="name"
+                  type="text"
+                  class="mt-1 block w-full"
+                  v-model="form.name"
+                  placeholder="Nombre de tipo de torneo"
+              />
+              <InputError class="mt-1" :message="form.errors.name" />
+            </div>
+            <RecordFormSubmit/>
+        </RecordFormBody>
+      </RecordForm>
     </AppLayout>
 </template>
