@@ -19,4 +19,8 @@ class Tournament extends Model
     public function type_tournament(){
         return $this->belongsTo(Type_tournament::class, 'type');
     }
+
+    public function places(){
+        return $this->hasMany(Places::class, 'id_tournament');
+    }
 }

@@ -57,3 +57,15 @@ export interface TypeTournament{
     id:number,
     name:string
 }
+
+export interface Place{
+    id:number,
+    id_user:number,
+    id_tournament:number,
+    id_payment:number,
+    status:string,
+    user?:{
+        id:number,
+        name:string
+    }
+}

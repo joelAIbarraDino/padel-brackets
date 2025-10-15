@@ -161,7 +161,17 @@ class TournamentController extends Controller
      */
     public function destroy(Tournament $tournament)
     {
-        $tournament->delete();
+        DB::transaction(function() use ($tournament){
+
+            $takenPlaces = Places::where('id_tournament', $tournament->id)
+                    ->where('status', 'ocupado')
+                    ->orderByDesc('id')
+                    ->get();
+            
+            if($takenPlaces->count() > 0)
+                $tournament->delete();
+            
+        });
 
         return Inertia::render('Tournaments/index', [
             'tournaments'=>Tournament::all(),

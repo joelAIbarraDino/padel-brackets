@@ -12,4 +12,12 @@ class Places extends Model
         'id_payment',
         'status'
     ];
+
+    public function tournament(){
+        return $this->belongsTo(Tournament::class, 'id_tournament');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

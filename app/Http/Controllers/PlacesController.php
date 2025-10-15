@@ -2,32 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Places;
+use App\Models\Tournament;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PlacesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Tournament $tournament)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return Inertia::render('Places/index', [
+            'places'=>$tournament->places()->with('user:id,name')->get()
+        ]);
     }
 
     /**
@@ -50,14 +39,6 @@ class PlacesController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }

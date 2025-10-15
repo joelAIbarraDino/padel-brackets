@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PlacesController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TypeTournamentController;
 use Illuminate\Support\Facades\Route;
@@ -35,5 +36,12 @@ Route::middleware('auth', 'verified')->group(function(){
     Route::delete('/type-tournaments/{typeTournament}', [TypeTournamentController::class, 'destroy'])->name('typeTournaments.destroy');
 });
 
+
+Route::middleware('auth', 'verified')->group(function(){
+    Route::get('/places/{tournament}', [PlacesController::class, 'index'])->name('places.index');
+    Route::get('/places/{place}', [PlacesController::class, 'show'])->name('places.show');
+    Route::get('/places/{place}/edit', [PlacesController::class, 'edit'])->name('places.edit');
+    Route::put('/places/{place}', [PlacesController::class, 'update'])->name('places.update');
+});
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

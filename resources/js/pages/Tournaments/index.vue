@@ -9,7 +9,7 @@ import { Tournament, BreadcrumbItem, AppPageProps} from "@/types";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Head, usePage, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Pencil, Trash, Users} from "lucide-vue-next";
+import { Pencil, Trash, Network} from "lucide-vue-next";
 import Swal from 'sweetalert2';
 import {computed} from 'vue';
 
@@ -99,8 +99,8 @@ const deleteTournament = async (id: number)=> {
                             type="url"
                             color="bg-violet-700"
                             hover="bg-violet-600"
-                            :icon=Users
-                            :action="`#`"
+                            :icon=Network
+                            :action="`/places/${tournament.id}`"
                         />
 
                     </TableActions>    
