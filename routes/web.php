@@ -3,12 +3,42 @@
 use App\Http\Controllers\PlacesController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\TypeTournamentController;
+use App\Models\Tournament;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
+
+Route::get('/torneos', function(){
+    $now = Carbon::now();
+
+    $startOfMonth = $now->copy()->startOfMonth();
+    $endOfMonth = $now->copy()->endOfMonth();
+
+    $tournaments = Tournament::whereBetween('scheduled_event', [$startOfMonth, $endOfMonth])
+        ->get()->map(function($tournament){
+            return[
+                'title'=>'Torneo #'.$tournament->id,
+                'start'=>$tournament->scheduled_event,
+                'url'=>'/torneos/places/'.$tournament->id
+            ];
+        });
+
+
+    return Inertia::render('public/tournaments', [
+        'events'=>$tournaments
+    ]);
+    
+})->name('tournaments');
+
+Route::get('/torneos/places/{tournament}', function(Tournament $tournament){
+    return Inertia::render('public/places', [
+        'places'=>$tournament->places()->with('user:id,name')->get()
+    ]);
+});
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

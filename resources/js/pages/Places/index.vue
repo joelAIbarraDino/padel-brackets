@@ -8,9 +8,7 @@ import { Head, usePage, Link } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { Eye, ArrowLeft } from "lucide-vue-next";
-import {computed, onMounted, ref} from 'vue';
-import { TournamentBracket } from "vue3-tournament"
-import type IRound from "vue3-tournament/interface/IRound"
+import {computed } from 'vue';
 import "vue3-tournament/style.css"
 
 
@@ -32,75 +30,39 @@ interface TournamentPageProps extends AppPageProps{
 const {props} = usePage<TournamentPageProps>();
 const places = computed(() => props.places);
 
-const onMatchClick = (matchId: string | number): void => {
-  alert(`click: ${matchId}`)
-}
+const rounds = computed(() => {
+  const totalPlayers = places.value.length;
+  if (!totalPlayers) return [];
 
-const onParticipantClick = (participant: any, match: any): void => {
-  console.log("participant", participant) // team or feedIn
-  console.log("match", match)
-}
+  const roundsArr: any[] = [];
 
-const rounds = ref<IRound[]>([
-  //Quarter
-  {
-    matchs: [
-      {
-        id: "match1",
-        winner: "1",
-        team1: { id: "1", name: "Competitor 1", score: 0 },
-        team2: { id: "2", name: "Competitor 2", score: 0 },
-      },
-      {
-        id: "match2",
-        winner: "4",
-        team1: { id: "3", name: "Competitor 3", score: 0 },
-        team2: { id: "4", name: "Competitor 4", score: 0 },
-      },
-      {
-        id: "match3",
-        winner: "5",
-        team1: { id: "5", name: "Competitor 5", score: 0 },
-        team2: { id: "6", name: "Competitor 6", score: 0 },
-      },
-      {
-        id: "match4",
-        winner: "8",
-        team1: { id: "7", name: "Competitor 7", score: 0 },
-        team2: { id: "8", name: "Competitor 8", score: 2 },
-      },
-    ],
-  },
-  //Semi
-  {
-    matchs: [
-      {
-        id: "match5",
-        winner: undefined,
-        team1: { id: "1", name: "Pendiente", score: 0 },
-        team2: { id: "4", name: "Pendiente", score: 0 },
-      },
-      {
-        id: "match6",
-        winner: undefined,
-        team1: { id: "1", name: "Pendiente", score: 0 },
-        team2: { id: "4", name: "Pendiente", score: 0 },
-      },
-    ],
-  },
-  //Final
-  {
-    matchs: [
-      {
-        id: "any_match_id",
-        winner: undefined,
-        team1: { id: "1", name: "Pendiente", score: 0 },
-        team2: { id: "4", name: "Pendiente", score: 0 },
-      },
-    ],
-  },
-])
+  // Primera ronda
+  const firstRound = [];
+  for (let i = 0; i < totalPlayers; i += 2) {
+    firstRound.push({
+      player1: places.value[i],
+      player2: places.value[i + 1],
+      spacing: 40,
+    });
+  }
+  roundsArr.push(firstRound);
 
+  // Generar las siguientes rondas visualmente (sin datos aún)
+  let matches = firstRound.length;
+  let spacing = 80;
+  while (matches > 1) {
+    matches = Math.ceil(matches / 2);
+    const round = Array.from({ length: matches }).map(() => ({
+      player1: null,
+      player2: null,
+      spacing,
+    }));
+    roundsArr.push(round);
+    spacing *= 2; // aumenta el espacio entre partidos visualmente
+  }
+
+  return roundsArr;
+});
 </script>
 
 <template>
@@ -120,13 +82,46 @@ const rounds = ref<IRound[]>([
                 </TabsList>
 
                 <TabsContent value="grafic">
-                    <div class="flex items-center justify-center">
-                        <TournamentBracket
-                            :rounds="rounds"
-                            @onMatchClick="onMatchClick"
-                            @onParticipantClick="onParticipantClick"   
-                        />
+                  <div class="relative w-full overflow-x-auto bg-slate-100 p-6 rounded-lg">
+                    
+                    <div class="relative min-h-[600px]">
+                      
+                      <div
+                        v-for="(round, roundIndex) in rounds"
+                        :key="'round-' + roundIndex"
+                        class="absolute top-0"
+                        :style="{
+                          left: `${roundIndex * 250}px`,
+                          width: '200px'
+                        }"
+                      >
+                        
+                        <div class="flex flex-col items-center justify-between h-full">
+                          <div
+                            v-for="(match, matchIndex) in round"
+                            :key="'match-' + matchIndex"
+                            class="relative flex flex-col items-center"
+                            :style="{
+                              marginTop: `${match.spacing / 2}px`,
+                              marginBottom: `${match.spacing / 2}px`,
+                            }"
+                          >
+                            
+                            <div class="w-40 text-center py-2 my-1 bg-sky-700 hover:bg-sky-600 text-white rounded cursor-pointer transition-all">
+                              {{ match.player1?.user?.name ?? 'Sin jugador' }}
+                            </div>
+                            
+                            <div class="w-40 text-center py-2 my-1 bg-sky-700 hover:bg-sky-600 text-white rounded cursor-pointer transition-all">
+                              {{ match.player2?.user?.name ?? 'Sin jugador' }}
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
                     </div>
+
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="table">

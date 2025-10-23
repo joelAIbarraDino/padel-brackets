@@ -110,7 +110,7 @@ function submit(){
                 <option value="inactivo">Inactivo</option>
                 <option value="finalizado">Finalizado</option>
               </select>
-              <InputError class="mt-1" :message="form.errors.admission_price" />
+              <InputError class="mt-1" :message="form.errors.status" />
             </div>
 
 

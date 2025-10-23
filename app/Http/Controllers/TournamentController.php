@@ -43,11 +43,11 @@ class TournamentController extends Controller
             'places' => [
                 'required',
                 'numeric',
-                'min:2',
+                'min:4',
                 'max:20',
                 function($attribute,$value, $fail) {
-                    if ($value % 2 !== 0) {
-                        $fail('El número de lugares debe ser divisible entre 2.');
+                    if ($value % 4 !== 0) {
+                        $fail('El número de lugares debe ser divisible entre 4.');
                     }
                 }
             ],
@@ -103,11 +103,11 @@ class TournamentController extends Controller
             'places' => [
                 'required',
                 'numeric',
-                'min:2',
+                'min:4',
                 'max:20',
                 function($attribute, $value, $fail) {
-                    if ($value % 2 !== 0) {
-                        $fail('El número de lugares debe ser divisible entre 2.');
+                    if ($value % 4 !== 0) {
+                        $fail('El número de lugares debe ser divisible entre 4.');
                     }
                 }
             ],
@@ -162,14 +162,21 @@ class TournamentController extends Controller
     public function destroy(Tournament $tournament)
     {
         DB::transaction(function() use ($tournament){
-
-            $takenPlaces = Places::where('id_tournament', $tournament->id)
-                    ->where('status', 'ocupado')
-                    ->orderByDesc('id')
-                    ->get();
             
-            if($takenPlaces->count() > 0)
+            $places = Places::where('id_tournament', $tournament->id)->get();
+
+            $takenPlaces = $places->filter(function($place){
+                return $place->status === 'ocupado';
+            }); 
+            
+            if($takenPlaces->count() == 0){
+
+                foreach($places as $place){
+                    $place->delete();
+                }
+
                 $tournament->delete();
+            }
             
         });
 

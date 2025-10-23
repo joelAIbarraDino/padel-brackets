@@ -1,16 +1,40 @@
 <script setup lang="ts">
 import { dashboard, login, register } from '@/routes';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+import { AppPageProps, Event } from '@/types';
+import { computed, ref } from 'vue';
+import { EventClickArg } from '@fullcalendar/core/index.js';
+
+
+interface EventageProps extends AppPageProps{
+    events:[];
+}
+
+const {props} = usePage<EventageProps>();
+const events = computed(() => props.events);
+
+const calendarOptions = ref({
+  plugins: [dayGridPlugin, interactionPlugin],
+  initialView: 'dayGridMonth',
+  events: events,
+  eventClick: function(info:EventClickArg) {
+    // Redirige al hacer click
+    window.location.href = info.event.url
+    info.jsEvent.preventDefault()
+  }
+})
+
 </script>
 
 <template>
-    <Head title="Padel">
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    </Head>
-    <div class="flex flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-        <header class="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-            <nav class="flex items-center justify-end gap-4">
+    <Head title="Torneos"/>
+
+    <div class="bg-[#FDFDFC] p-6 text-[#1b1b18] lg:p-8 dark:bg-[#0a0a0a]">
+        <header class="mb-6 w-full text-sm not-has-[nav]:hidden">
+            <nav class="flex items-end justify-end gap-4">
                 <Link
                     v-if="$page.props.auth.user"
                     :href="dashboard()"
@@ -42,6 +66,24 @@ import { Head, Link } from '@inertiajs/vue3';
                 </template>
             </nav>
         </header>
-        
+
+        <main>
+            <h1>Torneos registrados</h1>
+            <FullCalendar :options="calendarOptions" />
+        </main>
+
     </div>
+
 </template>
+
+<style>
+.fc {
+  --fc-border-color: #e5e7eb;
+  --fc-button-bg-color: #0369a1;
+  --fc-button-hover-bg-color: #0284c7;
+  --fc-button-active-bg-color: #075985;
+  --fc-event-bg-color: #0284c7;
+  --fc-event-border-color: #0369a1;
+  --fc-event-text-color: white;
+}
+</style>

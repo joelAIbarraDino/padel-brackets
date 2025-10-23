@@ -69,3 +69,10 @@ export interface Place{
         name:string
     }
 }
+
+export interface Event{
+    id:number,
+    title:string,
+    start:string,
+    url:string
+}
