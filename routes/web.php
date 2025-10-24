@@ -9,8 +9,27 @@ use Inertia\Inertia;
 use Carbon\Carbon;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+    $now = Carbon::now();
+
+    $startOfMonth = $now->copy()->startOfMonth();
+    $endOfMonth = $now->copy()->endOfMonth();
+
+    $tournaments = Tournament::whereBetween('scheduled_event', [$startOfMonth, $endOfMonth])
+        ->get()->map(function($tournament){
+            return[
+                'title'=>'Torneo #'.$tournament->id,
+                'start'=>$tournament->scheduled_event,
+                'url'=>'/torneos/places/'.$tournament->id
+            ];
+        });
+
+
+
+
+    return Inertia::render('Welcome', [
+        'events'=>$tournaments
+    ]);
+    })->name('home');
 
 Route::get('/torneos', function(){
     $now = Carbon::now();
