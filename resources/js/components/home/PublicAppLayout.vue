@@ -27,7 +27,9 @@ const menuOpen = ref(false);
         <HomeNav :open="menuOpen" :pages="pages" :social-media="socialMedia" @close="menuOpen = false"/>
     </header>
 
-    <slot></slot>
+    <main class="min-h-[80vh]">
+        <slot></slot>
+    </main>
 
     <HomeFooter :pages="pages" :social-media="socialMedia"/>
 

@@ -62,54 +62,52 @@ const matchColor = (match: any) => {
     <Head title="Torneos"/>
 
     <PublicAppLayout>
-        <main>
-            <HomePageName title="Lugares del torneo"/>
-            <div class="min-h-[700px] relative bg-neutral-200">
-                    
-                <div
-                    v-for="(round, roundIndex) in rounds"
-                    :key="'round-' + roundIndex"
-                    class="absolute top-0"
-                    :style="{
-                        left: `${roundIndex * 250}px`,
-                        width: '200px'
-                    }"
-                >
-                    
-                    <div class="flex flex-col items-center justify-between h-full">
+        
+        <HomePageName title="Lugares del torneo"/>
+        <div class="min-h-[700px] relative bg-neutral-200">
+                
+            <div
+                v-for="(round, roundIndex) in rounds"
+                :key="'round-' + roundIndex"
+                class="absolute top-0"
+                :style="{
+                    left: `${roundIndex * 250}px`,
+                    width: '200px'
+                }"
+            >
+                
+                <div class="flex flex-col items-center justify-between h-full">
+                    <div
+                        v-for="(match, matchIndex) in round"
+                        :key="'match-' + matchIndex"
+                        class="relative flex flex-col items-center"
+                        :style="{
+                        marginTop: `${match.spacing / 2}px`,
+                        marginBottom: `${match.spacing / 2}px`,
+                        }"
+                    >
+                        <!-- Jugador 1 -->
                         <div
-                            v-for="(match, matchIndex) in round"
-                            :key="'match-' + matchIndex"
-                            class="relative flex flex-col items-center"
-                            :style="{
-                            marginTop: `${match.spacing / 2}px`,
-                            marginBottom: `${match.spacing / 2}px`,
-                            }"
+                        :class="[
+                            'w-40 text-center py-2 my-1 text-white rounded cursor-pointer transition-all',
+                            matchColor(match)
+                        ]"
                         >
-                            <!-- Jugador 1 -->
-                            <div
-                            :class="[
-                                'w-40 text-center py-2 my-1 text-white rounded cursor-pointer transition-all',
-                                matchColor(match)
-                            ]"
-                            >
-                            {{ match.player1?.user?.name ?? 'Sin jugador' }}
-                            </div>
+                        {{ match.player1?.user?.name ?? 'Sin jugador' }}
+                        </div>
 
-                            <!-- Jugador 2 -->
-                            <div
-                            :class="[
-                                'w-40 text-center py-2 my-1 text-white rounded cursor-pointer transition-all',
-                                matchColor(match)
-                            ]"
-                            >
-                            {{ match.player2?.user?.name ?? 'Sin jugador' }}
-                            </div>
+                        <!-- Jugador 2 -->
+                        <div
+                        :class="[
+                            'w-40 text-center py-2 my-1 text-white rounded cursor-pointer transition-all',
+                            matchColor(match)
+                        ]"
+                        >
+                        {{ match.player2?.user?.name ?? 'Sin jugador' }}
                         </div>
                     </div>
                 </div>
-
             </div>
-        </main>
+        </div>
     </PublicAppLayout>
 </template>

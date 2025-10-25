@@ -32,11 +32,9 @@ const calendarOptions = ref({
 <template>
     <Head title="Torneos"/>
 
-    <PublicAppLayout>
-        <main class="bg-neutral-100">
-            <HomePageName title="Calendario de torneos"/>
-            <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto"/>
-        </main>
+    <PublicAppLayout>  
+      <HomePageName title="Calendario de torneos"/>
+      <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto"/>
     </PublicAppLayout>
 </template>
 

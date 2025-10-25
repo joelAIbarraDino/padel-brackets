@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\PlacesController;
-use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\TypeTournamentController;
-use App\Models\Tournament;
+use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\PlacesController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tournament;
 use Inertia\Inertia;
 use Carbon\Carbon;
 
@@ -26,7 +28,7 @@ Route::get('/', function () {
 
 
 
-    return Inertia::render('Welcome', [
+    return Inertia::render('Home', [
         'events'=>$tournaments
     ]);
     })->name('home');
@@ -92,5 +94,18 @@ Route::middleware('auth', 'verified')->group(function(){
     Route::get('/places/{place}/edit', [PlacesController::class, 'edit'])->name('places.edit');
     Route::put('/places/{place}', [PlacesController::class, 'update'])->name('places.update');
 });
+
+Route::middleware(['web'])->group(function () {
+    // Checkout pages (Inertia)
+    Route::get('/checkout/tournament/{place}', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.tournament');
+    Route::get('/checkout/membership/{id}', [CheckoutController::class, 'showMembershipCheckout'])->name('checkout.membership');
+
+    Route::get('/checkout/success', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.success');
+    Route::get('/checkout/cancel', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.cancel');
+    
+    // Stripe webhook (no CSRF) — handled normally but exclude from VerifyCsrfToken
+    Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
+});
+
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
