@@ -9,6 +9,21 @@ import { AppPageProps, Place, Tournament } from '@/types';
 import { usePage } from '@inertiajs/vue3';
 import { loadStripe, Stripe, StripeElements } from '@stripe/stripe-js';
 
+function formatDateTime(dateString:string) {
+  if (!dateString) return 'No definida'
+
+  const date = new Date(dateString)
+
+  return date.toLocaleString('es-MX', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  })
+}
+
 //proms para los detalles de la compra
 interface CheckoutPageProps extends AppPageProps{
     place: Place;
@@ -65,10 +80,10 @@ onMounted(async () =>{
 });
 
 //datos iniciales del formulario
-const name = ref('Joel Alejandro Ibarra Villar');
+const name = ref('');
 const nameError = ref('');
 
-const email = ref('joelvillar35@gmail.com');
+const email = ref('');
 const emailError = ref('');
 
 const message = ref('');
@@ -108,7 +123,7 @@ const handle = async () =>{
         const {error:stripeError} = await stripe.value.confirmPayment({
             elements:elements.value,
             confirmParams:{
-                return_url: `${window.location.origin}/checkout/result/${tournament.value.id}/${place.value.id}`,
+                return_url: `${window.location.origin}/checkout/tournament/success/${place.value.id}`,
                 payment_method_data:{
                     billing_details:{
                         name:name.value,
@@ -145,7 +160,7 @@ const handle = async () =>{
             
             <div class="space-y-2">
                 <p>Torneo: <span class="font-bold text-indigo-700">Torneo #{{ tournament?.id ?? '' }}</span> </p>
-                <p>Fecha y hora del torneo: <span class="font-bold text-indigo-700">{{ tournament?.scheduled_event ?? '' }}</span> </p>
+                <p>Fecha y hora del torneo: <span class="font-bold text-indigo-700">{{ formatDateTime(tournament?.scheduled_event)}}</span> </p>
                 <p>Lugar: <span class="font-bold text-indigo-700">Lugar #{{ place.id ?? '' }}</span> </p>
                 <hr>
                 <p>Costo de entrada: <span class="font-bold text-indigo-700">${{ tournament.admission_price ?? '' }}</span> </p>

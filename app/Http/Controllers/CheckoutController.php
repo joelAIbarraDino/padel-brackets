@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stripe\StripeClient;
 use App\Models\Places;
+use App\Models\Tournament;
 
 class CheckoutController extends Controller
 {
@@ -56,30 +57,40 @@ class CheckoutController extends Controller
         ]);
     }
 
-    /**
-     * Mostrar checkout para membership (por ahora "no implementadas")
-     */
     public function showMembershipCheckout(Request $request, $id)
     {
         // por ahora devolvemos una página similar; marca como 'not implemented'
-        $dummyAmount = 0.01; // placeholder
-        $amountCents = (int) round($dummyAmount * 100);
+        // $dummyAmount = 0.01; // placeholder
+        // $amountCents = (int) round($dummyAmount * 100);
 
-        $paymentIntent = $this->stripe->paymentIntents->create([
-            'amount' => $amountCents,
-            'currency' => 'mxn',
-            'automatic_payment_methods' => ['enabled' => true],
-            'metadata' => [
-                'product_type' => 'membership',
-                'membership_id' => $id,
-            ],
-        ]);
+        // $paymentIntent = $this->stripe->paymentIntents->create([
+        //     'amount' => $amountCents,
+        //     'currency' => 'mxn',
+        //     'automatic_payment_methods' => ['enabled' => true],
+        //     'metadata' => [
+        //         'product_type' => 'membership',
+        //         'membership_id' => $id,
+        //     ],
+        // ]);
 
         // En este caso no hay place ni tournament
-        return Inertia::render('Checkout/MembershipCheckoutPage', [
-            'stripeKey' => env('STRIPE_KEY'),
-            'clientSecret' => $paymentIntent->client_secret,
-            'membershipId' => $id,
-        ]);
+        // return Inertia::render('Checkout/MembershipCheckoutPage', [
+        //     'stripeKey' => env('STRIPE_KEY'),
+        //     'clientSecret' => $paymentIntent->client_secret,
+        //     'membershipId' => $id,
+        // ]);
     }
+
+    public function successPlace($place){
+
+        $placeModel = Places::with('tournament')->findOrFail($place);
+        $tournament = $placeModel->tournament;
+
+        return Inertia::render('checkout/successPlace',[
+            'place' => $placeModel,
+            'tournament' => $tournament,
+        ]);
+
+    }
+
 }

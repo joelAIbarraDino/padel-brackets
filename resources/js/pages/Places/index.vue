@@ -2,6 +2,7 @@
 
 import { TableRecordButton, TableActions, TableRecords } from '@/components/tableRecords';
 import { Tabs,TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {TournamentBracket} from '@/components/tournamentBracket';
 import { BreadcrumbItem, AppPageProps, Place} from "@/types";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Head, usePage, Link } from '@inertiajs/vue3';
@@ -82,46 +83,10 @@ const rounds = computed(() => {
                 </TabsList>
 
                 <TabsContent value="grafic">
-                  <div class="relative w-full overflow-x-auto bg-slate-100 p-6 rounded-lg">
-                    
-                    <div class="relative min-h-[600px]">
-                      
-                      <div
-                        v-for="(round, roundIndex) in rounds"
-                        :key="'round-' + roundIndex"
-                        class="absolute top-0"
-                        :style="{
-                          left: `${roundIndex * 250}px`,
-                          width: '200px'
-                        }"
-                      >
-                        
-                        <div class="flex flex-col items-center justify-between h-full">
-                          <div
-                            v-for="(match, matchIndex) in round"
-                            :key="'match-' + matchIndex"
-                            class="relative flex flex-col items-center"
-                            :style="{
-                              marginTop: `${match.spacing / 2}px`,
-                              marginBottom: `${match.spacing / 2}px`,
-                            }"
-                          >
-                            
-                            <div class="w-40 text-center py-2 my-1 bg-sky-700 hover:bg-sky-600 text-white rounded cursor-pointer transition-all">
-                              {{ match.player1?.user?.name ?? 'Sin jugador' }}
-                            </div>
-                            
-                            <div class="w-40 text-center py-2 my-1 bg-sky-700 hover:bg-sky-600 text-white rounded cursor-pointer transition-all">
-                              {{ match.player2?.user?.name ?? 'Sin jugador' }}
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
+                  <TournamentBracket
+                      :places="places" 
+                      base-url="/places/view/"
+                  />
                 </TabsContent>
 
                 <TabsContent value="table">

@@ -96,14 +96,10 @@ Route::middleware('auth', 'verified')->group(function(){
 });
 
 Route::middleware(['web'])->group(function () {
-    // Checkout pages (Inertia)
     Route::get('/checkout/tournament/{place}', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.tournament');
     Route::get('/checkout/membership/{id}', [CheckoutController::class, 'showMembershipCheckout'])->name('checkout.membership');
-
-    Route::get('/checkout/success', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.success');
-    Route::get('/checkout/cancel', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.cancel');
+    Route::get('/checkout/tournament/success/{place}', [CheckoutController::class, 'successPlace'])->name('checkout.placeSuccess');
     
-    // Stripe webhook (no CSRF) — handled normally but exclude from VerifyCsrfToken
     Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
 });
 

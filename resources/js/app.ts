@@ -6,6 +6,8 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { initializeTheme } from './composables/useAppearance';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import '@vue-flow/core/dist/style.css'
+import '@vue-flow/core/dist/theme-default.css'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

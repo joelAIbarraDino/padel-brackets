@@ -9,6 +9,7 @@ use App\Models\Places;
 use App\Models\Payments;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 use Stripe\Charge;
 
@@ -77,7 +78,12 @@ class StripeWebhookController extends Controller
 
             $user = User::firstOrCreate(
                 ['email' => $email],
-                ['name' => $name, 'role' => 3]
+                
+                [
+                    'name' => $name, 
+                    'role' => 3,
+                    'password' => Str::password()
+                ]
             );
 
             $place = Places::findOrFail($id_place);
@@ -112,7 +118,7 @@ class StripeWebhookController extends Controller
             if ($placeId) {
                 $place = Places::find($placeId);
                 if ($place) {
-                    $place->status = 'payment_failed';
+                    $place->status = 'libre';
                     $place->save();
                 }
             }

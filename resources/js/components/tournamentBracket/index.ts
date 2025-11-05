@@ -1,0 +1,1 @@
+export {default as TournamentBracket } from "./TournamentBracket.vue"
