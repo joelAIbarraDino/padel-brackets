@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TypeTournamentController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\PlacesController;
 use App\Http\Controllers\StripeWebhookController;
+use App\Models\Memberships;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tournament;
 use Inertia\Inertia;
@@ -25,8 +27,11 @@ Route::get('/', function () {
             ];
         });
 
+    $memberships = Memberships::all();
+
     return Inertia::render('Home', [
-        'events'=>$tournaments
+        'events'=>$tournaments,
+        'memberships'=>$memberships
     ]);
     })->name('home');
 
@@ -88,6 +93,16 @@ Route::middleware('auth', 'verified')->group(function(){
     Route::delete('/type-tournaments/{typeTournament}', [TypeTournamentController::class, 'destroy'])->name('typeTournaments.destroy');
 });
 
+Route::middleware('auth', 'verified')->group(function(){
+    Route::get('/memberships', [MembershipController::class, 'index'])->name('memberships.index');
+    Route::get('/memberships/create', [MembershipController::class, 'create'])->name('memberships.create');
+    Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
+    Route::get('/memberships/{membership}', [MembershipController::class, 'show'])->name('memberships.show');
+    Route::get('/memberships/{membership}/edit', [MembershipController::class, 'edit'])->name('memberships.edit');
+    Route::put('/memberships/{membership}', [MembershipController::class, 'update'])->name('memberships.update');
+    Route::delete('/memberships/{membership}', [MembershipController::class, 'destroy'])->name('memberships.destroy');
+});
+
 
 Route::middleware('auth', 'verified')->group(function(){
     Route::get('/places/{tournament}', [PlacesController::class, 'index'])->name('places.index');
@@ -98,9 +113,11 @@ Route::middleware('auth', 'verified')->group(function(){
 
 Route::middleware(['web'])->group(function () {
     Route::get('/checkout/tournament/{place}', [CheckoutController::class, 'showTournamentCheckout'])->name('checkout.tournament');
-    Route::get('/checkout/membership/{id}', [CheckoutController::class, 'showMembershipCheckout'])->name('checkout.membership');
-    Route::get('/checkout/tournament/success/{place}', [CheckoutController::class, 'successPlace'])->name('checkout.placeSuccess');
+    Route::get('/checkout/membership/{membership}', [CheckoutController::class, 'showMembershipCheckout'])->name('checkout.membership');
     
+    Route::get('/checkout/tournament/success/{place}', [CheckoutController::class, 'successPlace'])->name('checkout.placeSuccess');
+    Route::get('/checkout/membership/success/{membership}', [CheckoutController::class, 'successMembership'])->name('checkout.membershipSuccess');
+
     Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])->name('stripe.webhook');
 });
 

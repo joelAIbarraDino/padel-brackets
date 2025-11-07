@@ -5,6 +5,8 @@ import InputError from '@/components/InputError.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from "@/components/ui/number-field"
 import { AppPageProps, BreadcrumbItem, Tournament, TypeTournament } from '@/types';
 import { RecordForm, RecordFormBody, RecordFormHeader, RecordFormSubmit } from '@/components/recordForm';
 import { computed } from 'vue';
@@ -29,6 +31,7 @@ const form = useForm({
   scheduled_event:props.tournament.scheduled_event,
   admission_price:props.tournament.admission_price,
   places:props.tournament.places,
+  modality:props.tournament.modality,
   status:props.tournament.status
 });
 
@@ -36,7 +39,6 @@ function submit(){
   form.put(`/tournaments/${props.tournament.id}`,{
     preserveScroll:true,
     onSuccess: () => form.reset(),
-    onError:() => Swal.fire('Error', 'No se pudo actualizar el torneo.', 'error')
   })
 }
 
@@ -44,24 +46,30 @@ function submit(){
 
 <template>
     <Head title="Nuevo tipo de torneo"/>
-    <AppLayout :breadcrumbs="breadcrumbs">
+        <AppLayout :breadcrumbs="breadcrumbs">
       <RecordForm>
-        <RecordFormHeader title-form="Editar registro" return-url="/tournaments"/>
+        <RecordFormHeader title-form="Nuevo torneo" return-url="/tournaments"/>
         <RecordFormBody  :handle="submit">
 
             <div class="grid gap-1">
               <Label for="type">Tipo de torneo</Label>
-              <select
-                id="type"   
-                v-model="form.type"
-                class="w-full rounded border px-3 py-2 dark:text-white dark:bg-zinc-900  "
-              >
-                
-                <option 
-                  v-for="typeTournament in typeTournaments":key="typeTournament.id" 
-                  :value="typeTournament.id"
-                >{{ typeTournament.name }}</option>
-              </select>
+
+              <Select v-model="form.type" class="px-3 py-2 dark:text-white dark:bg-zinc-900" id="type">
+                <SelectTrigger>
+                    <SelectValue placeholder="Selecciona el tipo de torneo"/>
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Tipo de torneos</SelectLabel>
+                    <SelectItem v-for="typeTournament in typeTournaments":key="typeTournament.id" :value="typeTournament.id">
+                      {{ typeTournament.name }}
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+
+              </Select>
+
               <InputError class="mt-1" :message="form.errors.type" />
             </div>
             
@@ -88,28 +96,61 @@ function submit(){
             </div>
 
             <div class="grid gap-1">
-              <Label for="places">Lugares del torneo</Label>
-              <Input
-                  id="places"
-                  type="number"
-                  class="mt-1 block w-full"
-                  v-model="form.places"
-              />
+              <NumberField id="places" :default-value="0" :min="0" :step="2" v-model="form.places">
+                <Label for="places">Lugares del torneo</Label>
+
+                <NumberFieldContent>
+                  <NumberFieldDecrement/>
+                  <NumberFieldInput/>
+                  <NumberFieldIncrement/>
+                </NumberFieldContent>
+
+              </NumberField>
               <InputError class="mt-1" :message="form.errors.places" />
             </div>
 
             <div class="grid gap-1">
+              <Label for="status">Modalidad de torneo</Label>
+
+              <Select v-model="form.modality" class="px-3 py-2 dark:text-white dark:bg-zinc-900" id="status">
+                <SelectTrigger>
+                    <SelectValue placeholder="Selecciona la modalidad del torneo"/>
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Modalidades</SelectLabel>
+                    <SelectItem value="Round Robin">Round Robin</SelectItem>
+                    <SelectItem value="Eliminación directa">Eliminación directa</SelectItem>
+                    <SelectItem value="Doble eliminación">Doble Eliminación</SelectItem>
+                    <SelectItem value="Fase de grupos">Fase de grupos + eliminación</SelectItem>
+                    <SelectItem value="Americano">Americano</SelectItem>
+                    <SelectItem value="Rey de la pista">Rey de la pista</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+
+              </Select>
+              <InputError class="mt-1" :message="form.errors.modality" />
+            </div>
+
+            <div class="grid gap-1">
               <Label for="status">Estado de torneo</Label>
-              <select
-                id="status"   
-                v-model="form.status"
-                class="w-full rounded border px-3 py-2 dark:text-white dark:bg-zinc-900  "
-              >
-                <option value="" disabled>Selecciona un estatus</option>
-                <option value="activo" selected>Activo</option>
-                <option value="inactivo">Inactivo</option>
-                <option value="finalizado">Finalizado</option>
-              </select>
+
+              <Select v-model="form.status" class="px-3 py-2 dark:text-white dark:bg-zinc-900" id="status">
+                <SelectTrigger>
+                    <SelectValue placeholder="Selecciona el status del torneo"/>
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Status</SelectLabel>
+                    <SelectItem value="activo">Activo</SelectItem>
+                    <SelectItem value="inactivo">Inactivo</SelectItem>
+                    <SelectItem value="finalizado">Finalizado</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+
+              </Select>
               <InputError class="mt-1" :message="form.errors.status" />
             </div>
 

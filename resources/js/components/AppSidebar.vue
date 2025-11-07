@@ -2,7 +2,7 @@
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Medal, Trophy, Group, Users, Sparkles } from 'lucide-vue-next';
+import { Medal, Trophy, Group, Users, Sparkles, Badge } from 'lucide-vue-next';
 import {
     Sidebar,
     SidebarContent,
@@ -37,42 +37,38 @@ const mainNavItems = [
             },
         ]
     },
+
     {
-        title: "Usuarios",
-        url: "#",
-        icon: Users,
-        isActive: false,
-        items: [
-            {
-                title: "Torneos registrados",
-                url: "/tournaments",
-                icon: Medal
-            },
-            {
-                title: 'Tipo de torneos',
-                url: '/type-tournaments',
-                icon: Group
-            },
-        ]
-    },
-        {
         title: "Membresías",
         url: "#",
         icon: Sparkles,
-        isActive: false,
+        isActive: true,
         items: [
             {
-                title: "Torneos registrados",
-                url: "/tournaments",
-                icon: Medal
-            },
-            {
-                title: 'Tipo de torneos',
-                url: '/type-tournaments',
-                icon: Group
+                title: "Membresías",
+                url: "/memberships",
+                icon: Badge
             },
         ]
     },
+    // {
+    //     title: "Usuarios",
+    //     url: "#",
+    //     icon: Users,
+    //     isActive: false,
+    //     items: [
+    //         {
+    //             title: "Torneos registrados",
+    //             url: "/tournaments",
+    //             icon: Medal
+    //         },
+    //         {
+    //             title: 'Tipo de torneos',
+    //             url: '/type-tournaments',
+    //             icon: Group
+    //         },
+    //     ]
+    // },
 ];
 
 const footerNavItems: NavItem[] = [

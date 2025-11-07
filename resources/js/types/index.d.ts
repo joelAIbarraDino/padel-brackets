@@ -54,6 +54,14 @@ export interface Tournament{
 
 }
 
+export interface Membership{
+    id:number,
+    name:string,
+    description:string,
+    months_to_expire:number,
+    price:number,
+}
+
 export interface TypeTournament{
     id:number,
     name:string

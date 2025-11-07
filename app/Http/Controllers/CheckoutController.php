@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Memberships;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Stripe\StripeClient;
@@ -50,38 +51,45 @@ class CheckoutController extends Controller
         ]);
 
         // Pasar props a la vista Inertia
-        return Inertia::render('checkout/index', [
+        return Inertia::render('checkout/checkoutPlace', [
             'place' => $placeModel,
             'tournament' => $tournament,
             'clientSecret' => $paymentIntent->client_secret,
         ]);
     }
 
-    public function showMembershipCheckout(Request $request, $id)
+    public function showMembershipCheckout(Request $request,Memberships $membership)
     {
-        // por ahora devolvemos una página similar; marca como 'not implemented'
-        // $dummyAmount = 0.01; // placeholder
-        // $amountCents = (int) round($dummyAmount * 100);
+        
+        //si el precio es incorrecto, se redirige para evitar errores
+        if($membership->price < 0)
+            return redirect('/');
 
-        // $paymentIntent = $this->stripe->paymentIntents->create([
-        //     'amount' => $amountCents,
-        //     'currency' => 'mxn',
-        //     'automatic_payment_methods' => ['enabled' => true],
-        //     'metadata' => [
-        //         'product_type' => 'membership',
-        //         'membership_id' => $id,
-        //     ],
-        // ]);
+        // Determinar el precio en centavos MXN
+        $amount = (float) $membership->price;
+        $amountCents = (int) round($amount * 100);
 
-        // En este caso no hay place ni tournament
-        // return Inertia::render('Checkout/MembershipCheckoutPage', [
-        //     'stripeKey' => env('STRIPE_KEY'),
-        //     'clientSecret' => $paymentIntent->client_secret,
-        //     'membershipId' => $id,
-        // ]);
+        // Crear PaymentIntent con métodos automáticos
+        $paymentIntent = $this->stripe->paymentIntents->create([
+            'amount' => $amountCents,
+            'currency' => 'mxn',
+            'automatic_payment_methods' => ['enabled' => true],
+            // metadata para referencia del webhook
+            'metadata' => [
+                'membership_id' => $membership->id,
+                'product_type' => 'membership',
+            ]
+        ]);
+
+        // Pasar props a la vista Inertia
+        return Inertia::render('checkout/checkoutMembership', [
+            'membership' => $membership,
+            'clientSecret' => $paymentIntent->client_secret,
+        ]);
     }
 
-    public function successPlace($place){
+    public function successPlace($place)
+    {
 
         $placeModel = Places::with('tournament')->findOrFail($place);
         $tournament = $placeModel->tournament;
@@ -93,4 +101,10 @@ class CheckoutController extends Controller
 
     }
 
+    public function successMembership(Memberships $membership)
+    {
+        return Inertia::render('checkout/successMembership',[
+            'membership' => $membership,
+        ]);
+    }
 }

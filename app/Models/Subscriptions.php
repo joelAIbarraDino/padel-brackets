@@ -4,17 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Places extends Model
+class Subscriptions extends Model
 {
     protected $fillable = [
         'id_user',
-        'id_tournament',
+        'id_membership',
         'id_payment',
-        'status'
+        'expired_at'
     ];
 
-    public function tournament(){
-        return $this->belongsTo(Tournament::class, 'id_tournament');
+    public function membership(){
+        return $this->belongsTo(Memberships::class, 'id_membership');
     }
 
     public function user(){
@@ -24,5 +24,4 @@ class Places extends Model
     public function payment(){
         return $this->belongsTo(Payments::class, 'id_payment');
     }
-
 }
