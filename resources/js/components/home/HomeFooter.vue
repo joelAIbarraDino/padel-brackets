@@ -17,7 +17,7 @@ defineProps<{
 
 <template>
     
-    <footer class="bg-gray-900 text-white py-10 md:px-30 px-10">
+    <footer class="bg-primary text-white py-10 md:px-30 px-10">
         <div class="flex items-sart justify-between flex-col md:flex-row">
             <nav>
                 <ul class="flex flex-col">

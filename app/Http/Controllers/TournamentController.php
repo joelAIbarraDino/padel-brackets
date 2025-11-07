@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Places;
 use App\Models\Tournament;
 use App\Models\Type_tournament;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class TournamentController extends Controller
@@ -16,8 +19,22 @@ class TournamentController extends Controller
      */
     public function index()
     {   
+        $now = Carbon::now();
+
+        $startOfMonth = $now->copy()->startOfMonth();
+        $endOfMonth = $now->copy()->endOfMonth();
+
+        $tournamentsCalendar = Tournament::whereBetween('scheduled_event', [$startOfMonth, $endOfMonth])
+            ->get()->map(function($tournament){
+                return[
+                    'title'=>'Torneo #'.$tournament->id,
+                    'start'=>$tournament->scheduled_event,
+                    'url'=>'/places/'.$tournament->id
+                ];
+            });
         return Inertia::render('Tournaments/index',[
             'tournaments'=>Tournament::with(['type_tournament:id,name'])->get(),
+            'tournamentCalendar'=>$tournamentsCalendar
         ]);
     }
 
@@ -184,5 +201,56 @@ class TournamentController extends Controller
             'tournaments'=>Tournament::all(),
         ]);
 
+    }
+
+    public function winner(Tournament $tournament)
+    {    
+        $places = $tournament->places()->with('user:id,name')->where('status', 'ocupado')->get();
+
+        if(count($places) == 0 || count($places) < 3)
+            return redirect()->route('tournaments.index');
+
+        return Inertia::render('Tournaments/winners', [
+            'tournament'=>$tournament,
+            'places'=>$places
+        ]);
+
+    }
+
+    public function storeWinner(Request $request, Tournament $tournament){
+       
+        $validated = $request->validate([
+            'first_place'  => 'required|different:second_place|different:third_place',
+            'second_place' => 'required|different:first_place|different:third_place',
+            'third_place'  => 'required|different:first_place|different:second_place',
+        ], [
+            'different' => 'Cada jugador debe ser distinto en los tres lugares.',
+        ]);
+
+
+        $winners = User::whereIn('id', [
+            $validated['first_place'],
+            $validated['second_place'],
+            $validated['third_place'],
+        ])->get(['id', 'name']);
+
+
+        $results = collect([
+            ['place' => 1, 'winner' => $winners->firstWhere('id', '=', $validated['first_place'])],
+            ['place' => 2, 'winner' => $winners->firstWhere('id', '=', $validated['second_place'])],
+            ['place' => 3, 'winner' => $winners->firstWhere('id', '=', $validated['third_place'])],
+        ])->map(function ($item) {
+            return [
+                'place' => $item['place'],
+                'id'    => $item['winner']->id,
+                'name'  => $item['winner']->name,
+            ];
+        });
+        
+        $tournament->status = "finalizado";
+        $tournament->result = $results->toJson();
+        $tournament->save();
+
+        return redirect()->route('tournaments.index');
     }
 }

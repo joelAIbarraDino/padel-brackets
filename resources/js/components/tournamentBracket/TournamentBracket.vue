@@ -149,7 +149,7 @@ const TeamNode = (props: { data: any }) => {
       h('div', { class: 'flex flex-col gap-2 justify-center' },
         team.map((place: Place, i: number) => {
           if (place.status === 'ocupado') {
-            return h('span', { key: place.id, class: 'bg-white text-gray-800 px-2 py-1 rounded text-sm' }, place.user?.name ?? 'Usuario');
+            return h('span', { key: place.id, class: 'bg-white text-gray-800 px-2 py-1 rounded text-sm capitalize' }, place.user?.name ?? 'Usuario');
           }
           return h(
             Link,

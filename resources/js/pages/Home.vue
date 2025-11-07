@@ -40,7 +40,7 @@ const calendarOptions = ref({
     window.location.href = info.event.url
     info.jsEvent.preventDefault()
   }
-})
+});
 
 </script>
 
@@ -56,9 +56,9 @@ const calendarOptions = ref({
 
             <div class="absolute left-0 right-0 w-full h-full flex items-center justify-end">
                 <div class="font-home flex flex-col gap-4 items-center lg:w-4xl md:w-2xl w-full">
-                    <h2 class="font-bold text-5xl md:text-6xl lg:text-8xl text-white text-center slider animate-fade-slide-left">Eleva tu juego al siguiente <span class="text-red-500">nivel</span></h2>
+                    <h2 class="font-bold text-5xl md:text-6xl lg:text-8xl text-white text-center slider animate-fade-slide-left">Eleva tu juego al siguiente <span class="text-secondary">nivel</span></h2>
                     <p class="text-white text-xl md:text-2xl lg:text-4xl font-medium text-center">Eleva el juego al siguiente nivel</p>
-                    <Button class="py-8 px-16 text-white rounded-sm text-md md:text-xl lg:text-2xl font-medium bg-indigo-700 hover:bg-indigo-600 transition duration-300 ease-out hover:shadow-lg animate-fade-slide-up ">
+                    <Button class="py-8 px-16 text-white rounded-sm text-md md:text-xl lg:text-2xl font-medium bg-primary hover:bg-secondary hover:text-primary transition duration-300 ease-out hover:shadow-lg animate-fade-slide-up ">
                         <Link href="/torneos" class="flex items-center justify-center gap-4">¡Reserva ahora! <MoveRight/></Link>
                     </Button>
                 </div>
@@ -71,17 +71,17 @@ const calendarOptions = ref({
 
             <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
                 <div class="flex flex-col items-center gap-5">
-                    <div class="rounded-full bg-indigo-700 size-30 flex items-center justify-center text-white"><Calendar :size="60"/></div>
+                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Calendar :size="60"/></div>
                     <p class="text-2xl font-home font-bold">Eventos comunitarios</p>
                 </div>
 
                 <div class="flex flex-col items-center gap-5">
-                    <div class="rounded-full bg-indigo-700 size-30 flex items-center justify-center text-white"><Trophy :size="60"/></div>
+                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Trophy :size="60"/></div>
                     <p class="text-2xl font-home font-bold">Torneos y partidos</p>
                 </div>
 
                 <div class="flex flex-col items-center gap-5">
-                    <div class="rounded-full bg-indigo-700 size-30 flex items-center justify-center text-white"><Shirt :size="60"/></div>
+                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Shirt :size="60"/></div>
                     <p class="text-2xl font-home font-bold">Tienda especializada</p>
                 </div>
             </div>
@@ -169,8 +169,8 @@ const calendarOptions = ref({
             
         </section>
         
-        <section class="bg-linear-to-l from-indigo-800 via-indigo-600 to-indigo-500 p-20">
-            <h2 class="lg:text-7xl md:text-6xl text-5xl font-home font-bold uppercase text-center text-white">Siguenos en <span class="text-red-500">#padel_torneos</span></h2>        
+        <section class="bg-secondary p-20">
+            <h2 class="lg:text-7xl md:text-6xl text-5xl font-home font-bold uppercase text-center text-white">Siguenos en <span class="text-primary">#padel_torneos</span></h2>        
         </section>
     
         

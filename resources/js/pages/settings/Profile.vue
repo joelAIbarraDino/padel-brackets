@@ -23,7 +23,7 @@ defineProps<Props>();
 
 const breadcrumbItems: BreadcrumbItem[] = [
     {
-        title: 'Profile settings',
+        title: 'Configuración de perfil',
         href: edit().url,
     },
 ];
@@ -34,13 +34,13 @@ const user = page.props.auth.user;
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbItems">
-        <Head title="Profile settings" />
+        <Head title="Configuración de perfil" />
 
         <SettingsLayout>
             <div class="flex flex-col space-y-6">
                 <HeadingSmall
-                    title="Profile information"
-                    description="Update your name and email address"
+                    title="Información de perfil"
+                    description="Actualiza los datos de tu perfil"
                 />
 
                 <Form
@@ -49,7 +49,7 @@ const user = page.props.auth.user;
                     v-slot="{ errors, processing, recentlySuccessful }"
                 >
                     <div class="grid gap-2">
-                        <Label for="name">Name</Label>
+                        <Label for="name">Nombre</Label>
                         <Input
                             id="name"
                             class="mt-1 block w-full"
@@ -63,7 +63,7 @@ const user = page.props.auth.user;
                     </div>
 
                     <div class="grid gap-2">
-                        <Label for="email">Email address</Label>
+                        <Label for="email">Dirección de correo</Label>
                         <Input
                             id="email"
                             type="email"
@@ -79,13 +79,13 @@ const user = page.props.auth.user;
 
                     <div v-if="mustVerifyEmail && !user.email_verified_at">
                         <p class="-mt-4 text-sm text-muted-foreground">
-                            Your email address is unverified.
+                            Tu correo no esta verificado
                             <Link
                                 :href="send()"
                                 as="button"
                                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                             >
-                                Click here to resend the verification email.
+                                Presiona aquí para reenviar el link de verificación
                             </Link>
                         </p>
 
@@ -93,8 +93,7 @@ const user = page.props.auth.user;
                             v-if="status === 'verification-link-sent'"
                             class="mt-2 text-sm font-medium text-green-600"
                         >
-                            A new verification link has been sent to your email
-                            address.
+                            Un nuevo link de verificación se ha enviado a la bandeja de entrada
                         </div>
                     </div>
 
@@ -102,7 +101,7 @@ const user = page.props.auth.user;
                         <Button
                             :disabled="processing"
                             data-test="update-profile-button"
-                            >Save</Button
+                            >Guardar</Button
                         >
 
                         <Transition
@@ -115,14 +114,13 @@ const user = page.props.auth.user;
                                 v-show="recentlySuccessful"
                                 class="text-sm text-neutral-600"
                             >
-                                Saved.
+                                Guardado.
                             </p>
                         </Transition>
                     </div>
                 </Form>
             </div>
 
-            <DeleteUser />
         </SettingsLayout>
     </AppLayout>
 </template>

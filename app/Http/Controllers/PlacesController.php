@@ -15,7 +15,8 @@ class PlacesController extends Controller
     public function index(Tournament $tournament)
     {
         return Inertia::render('Places/index', [
-            'places'=>$tournament->places()->with('user:id,name')->get()
+            'places'=>$tournament->places()->with('user:id,name')->get(),
+            'tournamentID' => $tournament->id
         ]);
     }
 

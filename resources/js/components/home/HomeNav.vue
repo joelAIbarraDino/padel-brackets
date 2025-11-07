@@ -25,7 +25,7 @@ const closeMenu = () => emit("close");
     <transition name="slide-vertical">
         <div 
             v-if="props.open"
-            class="bg-indigo-700 w-full h-screen fixed inset-0 z-20"
+            class="bg-primary w-full h-screen fixed inset-0 z-20"
         >
 
             <div class="absolute top-0 left-0 w-full p-5 flex items-center justify-between">
@@ -33,14 +33,14 @@ const closeMenu = () => emit("close");
                     <img src="@/assets/logo.jpg" alt="Logo de página de torneo de padel" class="w-1/4 md:w-1/6 transition hover:opacity-90">
                 </Link>
                 
-                <div class="bg-white text-red-400 p-5 transition hover:text-indigo-700" @click="closeMenu">
+                <div class="bg-secondary text-primary hover:text-red-700 p-5 transition" @click="closeMenu">
                     <X/>
                 </div>
             </div>
 
             <nav class="absolute top-1/3 left-0 w-full flex flex-col items-center justify-between">
                 <ul class="flex flex-col gap-2">
-                    <li v-for="page in pages":key="page.url" class="text-4xl text-white hover:bg-indigo-600 py-2 px-4 font-home font-thin ">
+                    <li v-for="page in pages":key="page.url" class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
                     <Link :href="page.url">{{ page.text }}</Link> 
                     </li>
                 </ul>

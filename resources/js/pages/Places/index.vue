@@ -8,7 +8,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Head, usePage, Link } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Button from '@/components/ui/button/Button.vue';
-import { Eye, ArrowLeft } from "lucide-vue-next";
+import { Eye, ArrowLeft, Trophy } from "lucide-vue-next";
 import {computed } from 'vue';
 import "vue3-tournament/style.css"
 
@@ -25,11 +25,13 @@ const columnsName = [
 ];
 
 interface TournamentPageProps extends AppPageProps{
-    places: Place[]
+    places: Place[],
+    tournamentID:number
 }
 
 const {props} = usePage<TournamentPageProps>();
 const places = computed(() => props.places);
+const tournamentID = computed(()=>props.tournamentID);
 
 const rounds = computed(() => {
   const totalPlayers = places.value.length;
@@ -70,9 +72,13 @@ const rounds = computed(() => {
     <Head title="Lugares de torneo"/>
     <AppLayout :breadcrumbs="breadcrumbs">
 
-            <div class="flex pl-4 pt-4">
+            <div class="flex items-start flex-col md:flex-row md:items-center gap-5 pt-4 px-4">
                 <Button as-child class="bg-lime-600 text-white hover:bg-lime-700">
                     <Link href="/tournaments"><ArrowLeft/>Regresar</Link>
+                </Button>
+
+                <Button as-child class="bg-yellow-500 text-white hover:bg-yellow-400">
+                    <Link :href="`/tournaments/${tournamentID}/winner`"><Trophy/>Registrar ganador</Link>
                 </Button>
             </div>
 

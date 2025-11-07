@@ -25,9 +25,6 @@ Route::get('/', function () {
             ];
         });
 
-
-
-
     return Inertia::render('Home', [
         'events'=>$tournaments
     ]);
@@ -56,8 +53,10 @@ Route::get('/torneos', function(){
 })->name('tournaments');
 
 Route::get('/torneos/places/{tournament}', function(Tournament $tournament){
+
     return Inertia::render('public/places', [
-        'places'=>$tournament->places()->with('user:id,name')->get()
+        'places'=>$tournament->places()->with('user:id,name')->get(),
+        'tournament'=>$tournament
     ]);
 });
 
@@ -72,6 +71,8 @@ Route::middleware('auth', 'verified')->group(function(){
     Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournaments.store');
     Route::get('/tournaments/{tournament}', [TournamentController::class, 'show'])->name('tournaments.show');
     Route::get('/tournaments/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournaments.edit');
+    Route::get('/tournaments/{tournament}/winner', [TournamentController::class, 'winner'])->name('tournaments.winner');
+    Route::put('/tournaments/winner/{tournament}', [TournamentController::class, 'storeWinner'])->name('tournaments.winner');
     Route::put('/tournaments/{tournament}', [TournamentController::class, 'update'])->name('tournaments.update');
     Route::delete('/tournaments/{tournament}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
 
