@@ -70,6 +70,7 @@ class StripeWebhookController extends Controller
 
             $email = $billingDetails->email;
             $name = $billingDetails->name;
+            $phone = $billingDetails->phone;
 
             if (!$email) {
                 Log::warning("No se encontró email en billing_details para PaymentIntent {$paymentIntent->id}");
@@ -81,6 +82,7 @@ class StripeWebhookController extends Controller
                 
                 [
                     'name' => $name, 
+                    'phone'=>$phone,
                     'role' => 3,
                     'password' => Str::password()
                 ]

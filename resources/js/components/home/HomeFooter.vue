@@ -28,7 +28,7 @@ defineProps<{
             </nav>
 
             <div class="text-gray-200 mt-2 md:mt-0">
-                <p>@{{ new Date().getFullYear() }} Dinozign</p>
+                <p>@{{ new Date().getFullYear() }} Lomas Padel</p>
                 <ul class="flex gap-2 mt-2">
                     <li v-for="media in socialMedia":key="media.url" class="text-white p-2 transition hover:bg-gray-200 hover:text-black pl-0">
                         <Link :href="media.url"><component :is="media.icon" :size="20"/></Link>

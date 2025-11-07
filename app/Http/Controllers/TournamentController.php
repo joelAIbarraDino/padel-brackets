@@ -62,13 +62,14 @@ class TournamentController extends Controller
                 'numeric',
                 'min:4',
                 'max:20',
-                function($attribute,$value, $fail) {
+                function($attribute, $value, $fail) {
                     if ($value % 4 !== 0) {
                         $fail('El número de lugares debe ser divisible entre 4.');
                     }
                 }
             ],
-            'status'=>'nullable|string',
+            'modality'=>'required|string',
+            'status'=>'required|string',
             'result'=>'nullable|string'
         ]);
 

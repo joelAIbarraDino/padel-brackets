@@ -86,6 +86,9 @@ const nameError = ref('');
 const email = ref('');
 const emailError = ref('');
 
+const phone = ref('');
+const phoneError = ref('');
+
 const message = ref('');
 const messageInput = ref('');
 const error = ref (false);
@@ -112,10 +115,18 @@ const handle = async () =>{
         return;
     }
 
+    if(!phone.value){
+        phoneError.value = "Debe ingresar el telefono";
+        message.value="Verifique los datos ingresados para continuar";
+        error.value = true;
+        return;
+    }
+
     messageInput.value = "";
     message.value = "";
     nameError.value = "";
     emailError.value = "";
+    phoneError.value = "";
     error.value = false;
 
     try{
@@ -127,7 +138,8 @@ const handle = async () =>{
                 payment_method_data:{
                     billing_details:{
                         name:name.value,
-                        email:email.value
+                        email:email.value,
+                        phone:phone.value
                     }
                 }
             }
@@ -186,6 +198,19 @@ const handle = async () =>{
                             v-model="name"
                         />
                         <InputError class="mt-1" :message="nameError" />
+                    </div>
+                </div>
+
+                <div class="flex gap-4 flex-col md:flex-row border p-4 rounded-lg">
+                    <div class="grid gap-1 flex-1 space-y">
+                        <Label for="name">Teléfono</Label>
+                        <Input
+                            id="name"
+                            type="tel"
+                            placeholder="5514117400"
+                            v-model="phone"
+                        />
+                        <InputError class="mt-1" :message="phoneError" />
                     </div>
 
                     <div class="grid gap-1 flex-1 space-y">

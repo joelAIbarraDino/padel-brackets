@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { MoveRight, Calendar, Shirt, Trophy } from 'lucide-vue-next';
+import { MoveRight, Users, GraduationCap, Trophy, FlameKindling, WavesLadder, ShowerHead, Sun, Thermometer } from 'lucide-vue-next';
 import { HomeTitleSection, PublicAppLayout} from '@/components/home';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { Button } from '@/components/ui/button';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { EffectCoverflow, Pagination } from 'swiper/modules';
 import FullCalendar from '@fullcalendar/vue3'
+import listPlugin from '@fullcalendar/list'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import { EventClickArg } from '@fullcalendar/core/index.js';
@@ -22,6 +24,19 @@ const membresias = [
   { titulo: 'Membresía Pro', descripcion: 'Torneos premium y recompensas.', precio: '$39 / mes', color: 'text-pink-400' },
   { titulo: 'Membresía Elite', descripcion: 'Soporte personalizado y acceso ilimitado.', precio: '$59 / mes', color: 'text-yellow-400' }
 ];
+
+const defaultValue = "item-1"
+
+const accordionItems = [
+  { value: "item-1", title: "Round Robin", content: "Cada pareja juega contra todas las demás en su grupo. La suma de puntos o partidos ganados define a los clasificados. Ideal para asegurar que todos jueguen varios partidos. Útil en torneos sociales o de pocos equipos." },
+  { value: "item-2", title: "Eliminación directa", content: "Pierdes un partido y quedas fuera. Rápido, dinámico y sencillo de organizar. Ideal para fases finales o torneos con muchos equipos y poco tiempo." },
+  { value: "item-3", title: "Doble eliminación", content: "Cada pareja debe perder dos veces para quedar eliminada. Permite una segunda oportunidad en el \“cuadro de perdedores\”. Justo y competitivo, pero más largo que la eliminación directa." },
+  { value: "item-4", title: "Fase de grupos + eliminación", content: "Primera ronda en grupos (round robin corto). Los mejores pasan a cuartos/semifinal/final por eliminación directa. Equilibrio entre partidos garantizados y emoción de fases finales." },
+  { value: "item-5", title: "Americano", content: "Modalidad recreativa, rápida y flexible. Los jugadores cambian constantemente de pareja y rivales en cada mini-partido. Se suman puntos individuales, no por equipo fijo." },
+  { value: "item-6", title: "Rey de la pista", content: "Parejas rotan en una pista: los ganadores permanecen y los perdedores rotan y vuelven a intentar." },
+];
+
+
 
 interface EventageProps extends AppPageProps{
     events:[];
@@ -67,48 +82,129 @@ const calendarOptions = ref({
         </section>
 
         <section class="bg-white p-20 text-center">
-            <HomeTitleSection title="Unete a la experiencia" subtitle="Más que un juego"/>
+            <HomeTitleSection title="¿Quiénes somos?" text="Somos un club privado que combina deporte, convivencia y bienestar. Creamos torneos de pádel a la medida y actividades sociales exclusivas."/>
 
             <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
                 <div class="flex flex-col items-center gap-5">
-                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Calendar :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Eventos comunitarios</p>
-                </div>
-
-                <div class="flex flex-col items-center gap-5">
                     <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Trophy :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Torneos y partidos</p>
+                    <p class="text-2xl font-home font-bold">Torneos personalizados</p>
                 </div>
 
                 <div class="flex flex-col items-center gap-5">
-                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Shirt :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Tienda especializada</p>
+                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><GraduationCap :size="60"/></div>
+                    <p class="text-2xl font-home font-bold">Clases para todos los niveles</p>
+                </div>
+
+                <div class="flex flex-col items-center gap-5">
+                    <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Users :size="60"/></div>
+                    <p class="text-2xl font-home font-bold">Eventos sociales y deportivos</p>
                 </div>
             </div>
 
         </section>
 
-        <section class="bg-slate-950 flex flex-col md:flex-row">
+        <section class="bg-primary flex flex-col md:flex-row">
             <img src="@/assets/why-us.jpg" class="h-full w-full md:w-1/2">
 
-            <div class="flex items-center justify-center flex-col font-home text-white p-10">
-                    <HomeTitleSection 
-                        title="Vive la emoción del pádel como nunca antes"
-                        subtitle="Aprende a jugar"
-                        text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem reiciendis beatae fugiat voluptatem doloremque velit tempora ea praesentium a voluptate! "
-                    />
+            <div class="flex items-start justify-center flex-col font-home text-white py-10 px-5">
 
-                    <div class="mt-15">
-                        <div class="flex items-center justify-start gap-10 mt-10" v-for="i in 3":key="i">
+                    <h2 class="lg:text-7xl md:text-6xl text-3xl font-home font-bold uppercase text-secondary">Creamos experiencias significativas y personalizadas</h2>
+                    <p  class="font-home lg:text-xl text-md mt-4 text-left">Al terminar tu sesión de padel podrás relajarte en nuestras instalaciones</p>
+
+                    <div class="mt-10">
+
+                        <div class="flex items-center justify-start gap-10 mt-10">
+                            <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><FlameKindling :size="40"/></div>
+                            
                             <div>
-                                <h4 class="text-2xl font-black">Lorem ipsum dolor sit amet consectetur.</h4>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dicta esse obcaecati nemo aut amet eum pariatur fuga repellat expedita.
+                                <h4 class="text-2xl font-black text-secondary">Area de grill</h4>
+                                <p class="text-lg">
+                                    Contamos con un espacio diseñado para disfrutar momentos inolvidables alrededor del fuego. 
                                 </p>
                             </div>
                         </div>
+
+                        <div class="flex items-center justify-start gap-10 mt-10">
+                            <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><WavesLadder :size="40"/></div>
+                            
+                            <div>
+                                <h4 class="text-2xl font-black text-secondary">Alberca y jacuzzi</h4>
+                                <p class="text-lg">
+                                    Exclusiva alberca climatizada y relajante jacuzzi, ideales para disfrutar en cualquier época del año
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-start gap-10 mt-10">
+                            <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><Thermometer :size="40"/></div>
+                            
+                            <div>
+                                <h4 class="text-2xl font-black text-secondary">Sauna</h4>
+                                <p class="text-lg">
+                                    Relájate y renueva tu energía en un ambiente diseñado para tu bienestar.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-start gap-10 mt-10">
+                            <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><ShowerHead :size="40"/></div>
+                            
+                            <div>
+                                <h4 class="text-2xl font-black text-secondary">regaderas</h4>
+                                <p class="text-lg">
+                                    Frescura y confort después de cada partido o sesión en el club.
+                                </p>
+                            </div>
+                        </div>
+
                     </div>
             </div>
+
+        </section>
+
+        <section class="p-20">
+            <HomeTitleSection 
+                title="Tipo de torneos" 
+                subtitle="Torneos únicos, pensados para cada tipo de jugador"
+            />
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 w-9/10 m-auto gap-10">
+                <div class="bg-secondary p-10 flex flex-col items-center gap-5">
+                    <div class="rounded-full bg-primary size-25 flex items-center justify-center text-secondary hover:rotate-20 hover:scale-105 transition"><Trophy :size="50"/></div>
+                    <h4 class="text-3xl text-primary text-center font-home font-bold">Torneo básico</h4>
+                    <p class="text-white text-center text-xl font-home font-bold">Puede formarse desde 4 hasta 8 equipos, con una duración de 3 a 5 horas.</p>
+                </div>
+
+                <div class="bg-secondary p-10 flex flex-col items-center gap-5">
+                    <div class="rounded-full bg-primary size-25 flex items-center justify-center text-secondary hover:rotate-20 hover:scale-105 transition"><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-venus-icon lucide-venus">
+                        <path d="M12 15v7"/><path d="M9 19h6"/><circle cx="12" cy="9" r="6"/></svg>
+                    </div>
+                    <h4 class="text-3xl text-primary text-center font-home font-bold">Torneo femenil</h4>
+                    <p class="text-white text-center text-xl font-home font-bold">Puede formarse desde 4 hasta 8 equipos, con una duración de 3 a 5 horas.</p>
+                </div>
+
+                <div class="bg-secondary p-10 flex flex-col items-center gap-5">
+                    <div class="rounded-full bg-primary size-25 flex items-center justify-center text-secondary hover:rotate-20 hover:scale-105 transition"><Sun :size="50"/></div>
+                    <h4 class="text-3xl text-primary text-center font-home font-bold">Premium Day Pass</h4>
+                    <p class="text-white text-center text-xl font-home font-bold">Disfruta de un día de pádel, relájate en nuestras instalaciones.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="p-20 bg-primary">
+            <h2 class="lg:text-7xl md:text-6xl text-5xl font-home font-bold uppercase text-center text-secondary">Modalidades de torneo</h2>
+            <h3 class="font-home text-white text-center text-3xl mt-4">Disfruta de las diferentes formas de jugar en Lomas padel</h3>
+
+            <Accordion type="single" class="w-full md:w-7/10 m-auto" collapsible :default-value="defaultValue">
+                <AccordionItem v-for="item in accordionItems" :key="item.value" :value="item.value">
+                <AccordionTrigger class="text-secondary text-2xl font-home font-bold">{{ item.title }}</AccordionTrigger>
+                <AccordionContent class="text-white text-lg">
+                    {{ item.content }}
+                </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+
 
         </section>
 
@@ -170,7 +266,7 @@ const calendarOptions = ref({
         </section>
         
         <section class="bg-secondary p-20">
-            <h2 class="lg:text-7xl md:text-6xl text-5xl font-home font-bold uppercase text-center text-white">Siguenos en <span class="text-primary">#padel_torneos</span></h2>        
+            <h2 class="lg:text-7xl md:text-6xl text-4xl font-home font-bold uppercase text-center text-white">Siguenos en <span class="text-primary">#lomas_padel</span></h2>        
         </section>
     
         

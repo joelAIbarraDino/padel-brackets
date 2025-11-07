@@ -13,6 +13,7 @@ class Tournament extends Model
         'admission_price',
         'status',
         'places',
+        'modality',
         'result'
     ];
 

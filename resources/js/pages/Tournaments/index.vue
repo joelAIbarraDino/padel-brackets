@@ -34,7 +34,8 @@ function formatDateTime(dateString:string) {
 const breadcrumbs: BreadcrumbItem[] = [{title:'Torneos', href:'/tournaments'}]
 
 const columnsName = [
-    "Tipo de torneo", 
+    "Tipo de torneo",
+    "Modalidad", 
     "Fecha de evento", 
     "Precio de admisión", 
     "Estado", 
@@ -114,6 +115,7 @@ const deleteTournament = async (id: number)=> {
                    <TableRecords caption="Lista de torneos" :columnsHead="columnsName" class="pb-5">
                         <TableRow v-for="tournament in tournaments" :Key="tournament.id">
                             <TableCell>{{tournament.type_tournament?.name || 'Sin tipo'}}</TableCell>
+                            <TableCell>{{tournament.modality || 'Sin modalidad'}}</TableCell>
                             <TableCell>{{formatDateTime(tournament.scheduled_event)}}</TableCell>
                             <TableCell>$ {{tournament.admission_price}}</TableCell>
                             <TableCell>{{tournament.status}}</TableCell>

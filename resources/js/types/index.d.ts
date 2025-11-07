@@ -48,6 +48,7 @@ export interface Tournament{
     scheduled_event:string,
     admission_price:number,
     places:number,
+    modality:string,
     status:string,
     result:string
 
