@@ -83,17 +83,17 @@ const calendarOptions = ref({
             <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-10">
                 <div class="flex flex-col items-center gap-5">
                     <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Trophy :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Torneos personalizados</p>
+                    <p class="text-2xl font-home font-bold text-black">Torneos personalizados</p>
                 </div>
 
                 <div class="flex flex-col items-center gap-5">
                     <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><GraduationCap :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Clases para todos los niveles</p>
+                    <p class="text-2xl font-home font-bold text-black">Clases para todos los niveles</p>
                 </div>
 
                 <div class="flex flex-col items-center gap-5">
                     <div class="rounded-full bg-primary size-30 flex items-center justify-center text-white"><Users :size="60"/></div>
-                    <p class="text-2xl font-home font-bold">Eventos sociales y deportivos</p>
+                    <p class="text-2xl font-home font-bold text-black">Eventos sociales y deportivos</p>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@ const calendarOptions = ref({
 
         </section>
 
-        <section class="p-20">
+        <section class="p-20 bg-white">
             <HomeTitleSection 
                 title="Tipo de torneos" 
                 subtitle="Torneos únicos, pensados para cada tipo de jugador"
@@ -209,10 +209,10 @@ const calendarOptions = ref({
                 title="Proximos torneos"
                 subtitle="Inscribete ya al proximo torneo y demuestra de que estas hecho"
             />
-            <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto"/>
+            <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto text-black"/>
         </section>
 
-        <section class="py-35 px-20">
+        <section class="py-35 px-20 bg-white">
             <HomeTitleSection 
                 title="Aprovecha las membresías que tenemos para tí"
             />

@@ -33,8 +33,7 @@ En este apartado describiremos las tablas de la base de datos de la aplicación 
 
 ### Diagrama entidad-relación
 
-![Diagrama entidad relación](https://drive.google.com/file/d/1J8Wye-qesU7xmQsb2v2teZwLf-kT51qF/view?usp=sharing)
-
+![Diagrama entidad relación](https://drive.usercontent.google.com/download?id=1J8Wye-qesU7xmQsb2v2teZwLf-kT51qF&export=view&authuser=0)
 
 para la versión actual del sistema, el registro de los participantes del equipo se hace de forma individual y no por equipos, esto esta como nota que en la segunda interacción con el desarrollo del sistema esto cambiara
 

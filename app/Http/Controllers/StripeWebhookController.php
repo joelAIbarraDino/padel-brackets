@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AdminTypes;
 use App\Mail\PaymentSuccessMail;
 use App\Models\Memberships;
 use Illuminate\Http\Request;
@@ -90,7 +91,7 @@ class StripeWebhookController extends Controller
                 [
                     'name' => $name, 
                     'phone'=>$phone,
-                    'role' => 3,
+                    'role' => AdminTypes::CLIENT,
                     'password' => Str::password()
                 ]
             );
