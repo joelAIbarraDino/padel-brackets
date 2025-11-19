@@ -40,12 +40,16 @@ class AuthenticatedSessionController extends Controller
 
             return to_route('two-factor.login');
         }
-
-        Auth::login($user, $request->boolean('remember'));
-
+        
+        Auth::login($user, $request->boolean('remember'));        
         $request->session()->regenerate();
+        
+        if ($user->hasRole('admin')) {
+            return redirect()->route('dashboard');
+        }
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->route('player');
+
     }
 
     /**

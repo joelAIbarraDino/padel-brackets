@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NavFooter from '@/components/NavFooter.vue';
+// import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Medal, Trophy, Group, Users, Sparkles, Badge } from 'lucide-vue-next';
@@ -12,13 +12,24 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder} from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { dashboard, player } from '@/routes';
 
-const mainNavItems = [
+const page = usePage();
+
+const isAdmin = computed(() => {
+    const user = page.props.auth?.user;
+    return user && user.roles && user.roles.length > 0
+        ? user.roles[0].name === 'admin'
+        : false;
+});
+
+const mainNavItemsAdmin = [
     {
         title: "Torneos",
         url: "#",
@@ -71,6 +82,7 @@ const mainNavItems = [
     // },
 ];
 
+
 const footerNavItems: NavItem[] = [
     {
         title: 'Github Repo',
@@ -91,16 +103,21 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                        <Link v-if="isAdmin" :href="dashboard()">
                             <AppLogo />
                         </Link>
+
+                        <Link v-else :href="player()">
+                            <AppLogo />
+                        </Link>
+
                     </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarMenu>
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain v-if="isAdmin" :items="mainNavItemsAdmin" />
         </SidebarContent>
 
         <SidebarFooter>

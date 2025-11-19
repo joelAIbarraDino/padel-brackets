@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { X, Facebook, Twitter, Youtube, LucideIcon } from 'lucide-vue-next';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { logout } from '@/routes';
 
 const props = defineProps<{ 
     open: boolean,
@@ -18,6 +20,17 @@ const emit = defineEmits(["close"]);
 
 const closeMenu = () => emit("close");
 
+const page = usePage();
+const user = page.props.auth?.user;
+
+const isAdmin = computed(() => {
+    const user = page.props.auth?.user;
+    return user && user.roles && user.roles.length > 0
+        ? user.roles[0].name === 'admin'
+        : false;
+});
+
+console.log(isAdmin.value)
 
 </script>
 
@@ -42,6 +55,14 @@ const closeMenu = () => emit("close");
                 <ul class="flex flex-col gap-2">
                     <li v-for="page in pages":key="page.url" class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
                     <Link :href="page.url">{{ page.text }}</Link> 
+                    </li>
+
+                    <li v-if="!user" class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
+                        <Link href="/login">Iniciar sesión</Link> 
+                    </li>
+
+                    <li v-else class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
+                        <Link :href="logout()">Cerrar sesión</Link> 
                     </li>
                 </ul>
             </nav>

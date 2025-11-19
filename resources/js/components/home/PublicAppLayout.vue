@@ -7,7 +7,6 @@ import { ref } from 'vue';
 const pages = [
     {text:'Home', url: '/'},
     {text:'Calendario de torneos', url: '/torneos'},
-    {text:'Iniciar sesión', url: '/login'},
 ]
 
 const socialMedia = [

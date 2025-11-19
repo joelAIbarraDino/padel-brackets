@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table){
             $table->string('phone')->after('name')->nullable();
-            $table->integer('role')->after('password')->default(AdminTypes::CLIENT);
         });
     }
 
@@ -25,7 +24,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table){
             $table->dropColumn('phone');
-            $table->dropColumn('role');
         });
     }
 };

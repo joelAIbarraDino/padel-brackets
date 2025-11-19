@@ -13,12 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $this->call([
+            RoleSeeder::class,
+        ]);
+        
+        $admin = User::factory()->create([
             'name' => 'Administrador',
             'email' => 'admin@lomas-padel.com',
+            'password'=>'2019601919jJ+',
             'phone' => '5514127508'
         ]);
+
+        $admin->assignRole('admin');
     }
 }

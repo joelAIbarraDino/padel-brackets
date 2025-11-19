@@ -41,6 +41,21 @@ import { LoaderCircle } from 'lucide-vue-next';
                 </div>
 
                 <div class="grid gap-2">
+                    <Label for="phone">Teléfono</Label>
+                    <Input
+                        id="phone"
+                        type="number"
+                        required
+                        autofocus
+                        :tabindex="1"
+                        autocomplete="phone"
+                        name="phone"
+                        placeholder="Numero de telefono"
+                    />
+                    <InputError :message="errors.phone" />
+                </div>
+
+                <div class="grid gap-2">
                     <Label for="email">Email</Label>
                     <Input
                         id="email"

@@ -18,7 +18,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
 import { Link, usePage } from "@inertiajs/vue3";
-import { dashboard } from "@/routes";
+import { dashboard, player } from "@/routes";
+import { computed } from "vue";
 
 defineProps<{
   items: {
@@ -34,6 +35,13 @@ defineProps<{
   }[]
 }>()
 const page = usePage();
+
+const isAdmin = computed(() => {
+    const user = page.props.auth?.user;
+    return user && user.roles && user.roles.length > 0
+        ? user.roles[0].name === 'admin'
+        : false;
+});
 </script>
 
 <template>
@@ -41,8 +49,12 @@ const page = usePage();
         <SidebarGroupLabel>Menú</SidebarGroupLabel>
         <SidebarMenu>
             <SidebarMenuItem>
-                <SidebarMenuButton as-child :is-active="urlIsActive(dashboard(), page.url)">
+                <SidebarMenuButton v-if="isAdmin" as-child :is-active="urlIsActive(dashboard(), page.url)">
                     <Link :href="dashboard()"><LayoutDashboard /> Dashboard</Link>
+                </SidebarMenuButton>
+
+                <SidebarMenuButton v-else as-child :is-active="urlIsActive(player(), page.url)">
+                    <Link :href="player()"><LayoutDashboard /> Mí perfil</Link>
                 </SidebarMenuButton>
             </SidebarMenuItem>
 
