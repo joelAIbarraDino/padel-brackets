@@ -17,7 +17,7 @@ Route::middleware('auth', 'role:admin', 'verified')->group(function(){
     Route::get('/tournaments/{tournament}', [TournamentController::class, 'show'])->name('tournaments.show');
     Route::get('/tournaments/{tournament}/edit', [TournamentController::class, 'edit'])->name('tournaments.edit');
     Route::get('/tournaments/{tournament}/winner', [TournamentController::class, 'winner'])->name('tournaments.winner');
-    Route::put('/tournaments/winner/{tournament}', [TournamentController::class, 'storeWinner'])->name('tournaments.winner');
+    Route::put('/tournaments/winner/{tournament}', [TournamentController::class, 'storeWinner'])->name('tournaments.winnerStore');
     Route::put('/tournaments/{tournament}', [TournamentController::class, 'update'])->name('tournaments.update');
     Route::delete('/tournaments/{tournament}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
 
