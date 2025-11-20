@@ -91,8 +91,7 @@ const deleteTournament = async (id: number)=> {
                     <TabsTrigger value="table">Tabla</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="calendar">
-
+                <TabsContent value="calendar" class="bg-white">
                     <CalendarResponsive :events="tournamentsCalendar" />
                 </TabsContent>
 

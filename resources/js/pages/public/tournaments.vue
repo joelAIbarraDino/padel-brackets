@@ -19,7 +19,9 @@ const events = computed(() => props.events);
 
     <PublicAppLayout>  
       <HomePageName title="Calendario de torneos"/>
-      <CalendarResponsive :events="events" />
+      <div class="bg-white">
+        <CalendarResponsive :events="events" />
+      </div>
     </PublicAppLayout>
 </template>
 
