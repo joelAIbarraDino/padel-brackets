@@ -9,12 +9,8 @@ import { Pencil, Trash, Network, Trophy} from "lucide-vue-next";
 import { Head, usePage, router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Swal from 'sweetalert2';
-import {computed, ref} from 'vue';
-
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import { EventClickArg } from '@fullcalendar/core/index.js';
+import {computed} from 'vue';
+import { CalendarResponsive } from '@/components/calendar';
 
 function formatDateTime(dateString:string) {
   if (!dateString) return 'No definida'
@@ -50,18 +46,6 @@ interface TournamentPageProps extends AppPageProps{
 const {props} = usePage<TournamentPageProps>();
 const tournaments = computed(() => props.tournaments);
 const tournamentsCalendar = computed(()=> props.tournamentCalendar);
-
-const calendarOptions = ref({
-  plugins: [dayGridPlugin, interactionPlugin],
-  initialView: 'dayGridMonth',
-  events: tournamentsCalendar,
-  eventClick: function(info:EventClickArg) {
-    // Redirige al hacer click
-    window.location.href = info.event.url
-    info.jsEvent.preventDefault()
-  }
-})
-
 
 //eliminar registro
 const deleteTournament = async (id: number)=> {
@@ -108,7 +92,8 @@ const deleteTournament = async (id: number)=> {
                 </TabsList>
 
                 <TabsContent value="calendar">
-                    <FullCalendar :options="calendarOptions" class="mt-5 w-7/10 mx-auto"/>
+
+                    <CalendarResponsive :events="tournamentsCalendar" />
                 </TabsContent>
 
                 <TabsContent value="table">

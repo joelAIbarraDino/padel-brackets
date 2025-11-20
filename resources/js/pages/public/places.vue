@@ -5,7 +5,6 @@ import { usePage, Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { HomePageName, PublicAppLayout } from '@/components/home';
 import {TournamentBracket} from '@/components/tournamentBracket';
-import Button from '@/components/ui/button/Button.vue';
 
 interface TournamentPageProps extends AppPageProps{
     places: Place[],

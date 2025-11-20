@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import { AppPageProps, Event } from '@/types';
-import { computed, ref } from 'vue';
-import { EventClickArg } from '@fullcalendar/core/index.js';
 import { HomePageName, PublicAppLayout } from '@/components/home';
-
+import { CalendarResponsive } from '@/components/calendar';
+import { Head, usePage } from '@inertiajs/vue3';
+import { AppPageProps } from '@/types';
+import { computed } from 'vue';
 
 interface EventageProps extends AppPageProps{
     events:[];
@@ -16,17 +12,6 @@ interface EventageProps extends AppPageProps{
 const {props} = usePage<EventageProps>();
 const events = computed(() => props.events);
 
-const calendarOptions = ref({
-  plugins: [dayGridPlugin, interactionPlugin],
-  initialView: 'dayGridMonth',
-  events: events,
-  eventClick: function(info:EventClickArg) {
-    // Redirige al hacer click
-    window.location.href = info.event.url
-    info.jsEvent.preventDefault()
-  }
-})
-
 </script>
 
 <template>
@@ -34,7 +19,7 @@ const calendarOptions = ref({
 
     <PublicAppLayout>  
       <HomePageName title="Calendario de torneos"/>
-      <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto"/>
+      <CalendarResponsive :events="events" />
     </PublicAppLayout>
 </template>
 

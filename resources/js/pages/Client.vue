@@ -94,7 +94,7 @@ const subscription = computed(() => props.subscription);
                 </div>
 
                 <div v-else class="text-zinc-500 dark:text-zinc-400">
-                    No estás inscrito a ningún torneo.
+                    No estás inscrito en ningún torneo.
                     <br>
                     <a href="/torneos" class="text-blue-600 hover:underline">
                         Ver Torneos

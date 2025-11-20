@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { MoveRight, Users, GraduationCap, Trophy, FlameKindling, WavesLadder, ShowerHead, Sun, Thermometer } from 'lucide-vue-next';
-import { HomeTitleSection, PublicAppLayout} from '@/components/home';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { HomeTitleSection, PublicAppLayout} from '@/components/home';
+import { CalendarResponsive } from '@/components/calendar';
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import { Button } from '@/components/ui/button';
+import { AppPageProps, Membership } from '@/types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Button } from '@/components/ui/button';
 import { Pagination } from 'swiper/modules';
-import FullCalendar from '@fullcalendar/vue3'
-
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
-import { EventClickArg } from '@fullcalendar/core/index.js';
-
+import { computed } from 'vue';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
-import { AppPageProps, Membership } from '@/types';
-import { computed, ref } from 'vue';
 
 const defaultValue = "item-1"
 
@@ -30,8 +25,6 @@ const accordionItems = [
   { value: "item-6", title: "Rey de la pista", content: "Parejas rotan en una pista: los ganadores permanecen y los perdedores rotan y vuelven a intentar." },
 ];
 
-
-
 interface EventageProps extends AppPageProps{
     events:[];
     memberships:Membership[]
@@ -40,18 +33,6 @@ interface EventageProps extends AppPageProps{
 const {props} = usePage<EventageProps>();
 const events = computed(() => props.events);
 const memberships = computed(() => props.memberships);
-
-
-const calendarOptions = ref({
-  plugins: [dayGridPlugin, interactionPlugin],
-  initialView: 'dayGridMonth',
-  events: events,
-  eventClick: function(info:EventClickArg) {
-    // Redirige al hacer click
-    window.location.href = info.event.url
-    info.jsEvent.preventDefault()
-  }
-});
 
 </script>
 
@@ -68,7 +49,7 @@ const calendarOptions = ref({
             <div class="absolute left-0 right-0 w-full h-full flex items-center justify-end">
                 <div class="font-home flex flex-col gap-4 items-center lg:w-4xl md:w-2xl w-full">
                     <h2 class="font-bold text-5xl md:text-6xl lg:text-8xl text-white text-center slider animate-fade-slide-left">Eleva tu juego al siguiente <span class="text-secondary">nivel</span></h2>
-                    <p class="text-white text-xl md:text-2xl lg:text-4xl font-medium text-center">Eleva el juego al siguiente nivel</p>
+                    <p class="text-white text-xl md:text-2xl lg:text-4xl font-medium text-center">Ven y prueba de qué estás hecho</p>
                     <Button class="py-8 px-16 text-white rounded-sm text-md md:text-xl lg:text-2xl font-medium bg-primary hover:bg-secondary hover:text-primary transition duration-300 ease-out hover:shadow-lg animate-fade-slide-up ">
                         <Link href="/torneos" class="flex items-center justify-center gap-4">¡Reserva ahora! <MoveRight/></Link>
                     </Button>
@@ -105,7 +86,7 @@ const calendarOptions = ref({
             <div class="flex items-start justify-center flex-col font-home text-white py-10 px-5">
 
                     <h2 class="lg:text-7xl md:text-6xl text-3xl font-home font-bold uppercase text-secondary">Creamos experiencias significativas y personalizadas</h2>
-                    <p  class="font-home lg:text-xl text-md mt-4 text-left">Al terminar tu sesión de padel podrás relajarte en nuestras instalaciones</p>
+                    <p  class="font-home lg:text-xl text-md mt-4 text-left">Al terminar tu sesión de pádel</p>
 
                     <div class="mt-10">
 
@@ -113,7 +94,7 @@ const calendarOptions = ref({
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><FlameKindling :size="40"/></div>
                             
                             <div>
-                                <h4 class="text-2xl font-black text-secondary">Area de grill</h4>
+                                <h4 class="text-2xl font-black text-secondary">Área de grill</h4>
                                 <p class="text-lg">
                                     Contamos con un espacio diseñado para disfrutar momentos inolvidables alrededor del fuego. 
                                 </p>
@@ -126,7 +107,7 @@ const calendarOptions = ref({
                             <div>
                                 <h4 class="text-2xl font-black text-secondary">Alberca y jacuzzi</h4>
                                 <p class="text-lg">
-                                    Exclusiva alberca climatizada y relajante jacuzzi, ideales para disfrutar en cualquier época del año
+                                    Exclusiva alberca climatizada y relajante jacuzzi, ideales para disfrutar en cualquier época del año.
                                 </p>
                             </div>
                         </div>
@@ -146,7 +127,7 @@ const calendarOptions = ref({
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><ShowerHead :size="40"/></div>
                             
                             <div>
-                                <h4 class="text-2xl font-black text-secondary">regaderas</h4>
+                                <h4 class="text-2xl font-black text-secondary">Regaderas</h4>
                                 <p class="text-lg">
                                     Frescura y confort después de cada partido o sesión en el club.
                                 </p>
@@ -190,7 +171,7 @@ const calendarOptions = ref({
 
         <section class="p-20 bg-primary">
             <h2 class="lg:text-7xl md:text-6xl text-5xl font-home font-bold uppercase text-center text-secondary">Modalidades de torneo</h2>
-            <h3 class="font-home text-white text-center text-3xl mt-4">Disfruta de las diferentes formas de jugar en Lomas padel</h3>
+            <h3 class="font-home text-white text-center text-3xl mt-4">Disfruta de las diferentes formas de jugar en Lomas pádel</h3>
 
             <Accordion type="single" class="w-full md:w-7/10 m-auto" collapsible :default-value="defaultValue">
                 <AccordionItem v-for="item in accordionItems" :key="item.value" :value="item.value">
@@ -206,15 +187,16 @@ const calendarOptions = ref({
 
         <section class="text-center p-20 bg-neutral-100">
             <HomeTitleSection
-                title="Proximos torneos"
-                subtitle="Inscribete ya al proximo torneo y demuestra de que estas hecho"
+                title="Próximos torneos"
+                subtitle="Inscribete ya al próximo torneo y demuestra de que estas hecho"
             />
-            <FullCalendar :options="calendarOptions" class="p-10 w-7/10 mx-auto text-black"/>
+
+            <CalendarResponsive :events="events" />
         </section>
 
         <section class="py-35 px-20 bg-white">
             <HomeTitleSection 
-                title="Aprovecha las membresías que tenemos para tí"
+                title="Aprovecha las membresías que tenemos para ti"
             />
 
             <Swiper
@@ -259,7 +241,7 @@ const calendarOptions = ref({
         </section>
         
         <section class="bg-black p-20">
-            <h2 class="lg:text-7xl md:text-6xl text-4xl font-home font-bold uppercase text-center text-white">Siguenos en <span class="text-secondary">#lomas_padel</span></h2>        
+            <h2 class="lg:text-7xl md:text-6xl text-4xl font-home font-bold uppercase text-center text-white">Síguenos en <span class="text-secondary">#lomas_pádel</span></h2>        
         </section>
     
         
