@@ -36,6 +36,7 @@ const {props} = usePage<CheckoutPageProps>();
 const place = computed(() => props.place);
 const tournament = computed(() => props.tournament);
 const clientSecret = computed(() => props.clientSecret);
+const user = props.auth.user;
 
 //stripe key expuesto desde las variables de entorno del proyecto
 const stripeKey = import.meta.env.VITE_STRIPE_KEY;
@@ -80,13 +81,13 @@ onMounted(async () =>{
 });
 
 //datos iniciales del formulario
-const name = ref('');
+const name = ref(user?.name??'');
 const nameError = ref('');
 
-const email = ref('');
+const email = ref(user?.email??'');
 const emailError = ref('');
 
-const phone = ref('');
+const phone = ref(user?.phone??'');
 const phoneError = ref('');
 
 const message = ref('');
@@ -196,6 +197,7 @@ const handle = async () =>{
                             type="text"
                             placeholder="John Doe"
                             v-model="name"
+                            :disabled="!!user"
                         />
                         <InputError class="mt-1" :message="nameError" />
                     </div>
@@ -209,6 +211,7 @@ const handle = async () =>{
                             type="tel"
                             placeholder="5514117400"
                             v-model="phone"
+                            :disabled="!!user"
                         />
                         <InputError class="mt-1" :message="phoneError" />
                     </div>
@@ -220,6 +223,7 @@ const handle = async () =>{
                             type="email"
                             placeholder="example@correo.com"
                             v-model="email"
+                            :disabled="!!user"
                         />
                         <InputError class="mt-1" :message="emailError" />
                     </div>
