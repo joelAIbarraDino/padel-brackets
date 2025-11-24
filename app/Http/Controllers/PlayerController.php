@@ -13,8 +13,7 @@ class PlayerController extends Controller
 
         // Torneos del usuario a través de places
         $tournaments = $user->tournaments()
-            ->with(['typeTournament'])
-            ->get();
+            ->with(['type_tournament'])->get();
 
         // Membresía activa (si existe)
         $subscription = $user->activeSubscription()

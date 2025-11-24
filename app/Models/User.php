@@ -49,7 +49,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function places(){
+    public function places()
+    {
         return $this->hasMany(Places::class, 'id_user');
     }
 
