@@ -2,7 +2,7 @@
 import { X, Facebook, Twitter, Youtube, LucideIcon } from 'lucide-vue-next';
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import { logout } from '@/routes';
+import { dashboard, logout, player } from '@/routes';
 
 const props = defineProps<{ 
     open: boolean,
@@ -29,8 +29,6 @@ const isAdmin = computed(() => {
         ? user.roles[0].name === 'admin'
         : false;
 });
-
-console.log(isAdmin.value)
 
 </script>
 
@@ -61,8 +59,12 @@ console.log(isAdmin.value)
                         <Link href="/login">Iniciar sesión</Link> 
                     </li>
 
-                    <li v-else class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
-                        <Link :href="logout()">Cerrar sesión</Link> 
+                    <li v-else-if="isAdmin" class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
+                        <Link :href="dashboard()">Dashboard</Link> 
+                    </li>
+
+                    <li v-else-if="!isAdmin" class="text-4xl text-white hover:bg-secondary hover:text-primary py-2 px-4 font-home font-thin ">
+                        <Link :href="player()">Mi perfil</Link> 
                     </li>
                 </ul>
             </nav>

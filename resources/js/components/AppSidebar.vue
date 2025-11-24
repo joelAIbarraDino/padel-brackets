@@ -2,7 +2,7 @@
 // import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Medal, Trophy, Group, Users, Sparkles, Badge } from 'lucide-vue-next';
+import { Medal, Trophy, Group, Users, Sparkles, Badge, House, Laptop, CalendarDays } from 'lucide-vue-next';
 import {
     Sidebar,
     SidebarContent,
@@ -82,6 +82,27 @@ const mainNavItemsAdmin = [
     // },
 ];
 
+const mainNavItemsPlayer = [
+    {
+        title: "Home",
+        url: "#",
+        icon: Laptop,
+        isActive: true,
+        items: [
+            {
+                title: "Pagina principal",
+                url: "/",
+                icon: House
+            },
+            {
+                title: 'Ver mas torneos',
+                url: '/torneos',
+                icon: CalendarDays
+            },
+        ]
+    }
+];
+
 
 const footerNavItems: NavItem[] = [
     {
@@ -118,6 +139,7 @@ const footerNavItems: NavItem[] = [
 
         <SidebarContent>
             <NavMain v-if="isAdmin" :items="mainNavItemsAdmin" />
+            <NavMain v-else :items="mainNavItemsPlayer" />
         </SidebarContent>
 
         <SidebarFooter>
