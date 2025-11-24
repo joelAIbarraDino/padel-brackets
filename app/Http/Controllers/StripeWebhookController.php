@@ -91,7 +91,7 @@ class StripeWebhookController extends Controller
                 [
                     'name' => $name, 
                     'phone'=>$phone,
-                    'role' => AdminTypes::CLIENT,
+                    'role' => 'user',
                     'password' => Str::password()
                 ]
             );
