@@ -40,18 +40,47 @@ const memberships = computed(() => props.memberships);
     <Head title="Padel"></Head>
 
     <PublicAppLayout>
+        
+        <section class="relative w-full h-screen overflow-hidden">
 
-        <section class="relative w-full h-screen bg-[url('@/assets/slider.jpg')] bg-no-repeat bg-cover bg-top-left">
+            <!-- Video de fondo (con poster para carga rápida) -->
+            <video
+                src="@/assets/slider-video.mp4"
+                poster="@/assets/slider.jpg"
+                autoplay
+                muted
+                loop
+                playsinline
+                class="absolute inset-0 w-full h-full object-cover"
+            ></video>
+
+            <!-- Capa oscura para contraste -->
+            <div class="absolute inset-0 bg-black/40"></div>
+
+            <!-- Logo -->
             <Link href="/">
-                <img src="@/assets/logo.jpg" alt="Logo de página de torneo de padel" class="w-1/4 md:w-1/6 transition hover:opacity-90 absolute top-5 left-5">
+                <img
+                    src="@/assets/logo.jpg"
+                    alt="Logo"
+                    class="w-1/4 md:w-1/6 transition hover:opacity-90 absolute top-5 left-5 z-20"
+                />
             </Link>
 
-            <div class="absolute left-0 right-0 w-full h-full flex items-center justify-end">
+            <!-- Contenido del Hero -->
+            <div class="absolute inset-0 flex items-center justify-end z-20">
                 <div class="font-home flex flex-col gap-4 items-center lg:w-4xl md:w-2xl w-full">
-                    <h2 class="font-bold text-5xl md:text-6xl lg:text-8xl text-white text-center slider animate-fade-slide-left">Eleva tu juego al siguiente <span class="text-secondary">nivel</span></h2>
-                    <p class="text-white text-xl md:text-2xl lg:text-4xl font-medium text-center">Ven y prueba de qué estás hecho</p>
-                    <Button class="py-8 px-16 text-white rounded-sm text-md md:text-xl lg:text-2xl font-medium bg-primary hover:bg-secondary hover:text-primary transition duration-300 ease-out hover:shadow-lg animate-fade-slide-up ">
-                        <Link href="/torneos" class="flex items-center justify-center gap-4">¡Reserva ahora! <MoveRight/></Link>
+                    <h2 class="font-bold text-5xl md:text-6xl lg:text-8xl text-white text-center animate-fade-slide-left">
+                        Eleva tu juego al siguiente <span class="text-secondary">nivel</span>
+                    </h2>
+
+                    <p class="text-white text-xl md:text-2xl lg:text-4xl font-medium text-center">
+                        Ven y prueba de qué estás hecho
+                    </p>
+
+                    <Button class="py-8 px-16 text-white rounded-sm text-md md:text-xl lg:text-2xl font-medium bg-primary hover:bg-secondary hover:text-primary transition duration-300 ease-out hover:shadow-lg animate-fade-slide-up">
+                        <Link href="/torneos" class="flex items-center justify-center gap-4">
+                            ¡Reserva ahora! <MoveRight/>
+                        </Link>
                     </Button>
                 </div>
             </div>
