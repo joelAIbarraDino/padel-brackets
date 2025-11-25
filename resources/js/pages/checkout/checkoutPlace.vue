@@ -36,7 +36,7 @@ const {props} = usePage<CheckoutPageProps>();
 const place = computed(() => props.place);
 const tournament = computed(() => props.tournament);
 const clientSecret = computed(() => props.clientSecret);
-const user = props.auth.user;
+const user = props.auth.user.roles[0].name === 'user'?props.auth.user:null;
 
 //stripe key expuesto desde las variables de entorno del proyecto
 const stripeKey = import.meta.env.VITE_STRIPE_KEY;

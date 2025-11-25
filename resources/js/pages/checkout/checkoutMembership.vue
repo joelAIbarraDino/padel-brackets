@@ -19,6 +19,7 @@ interface CheckoutPageProps extends AppPageProps{
 const {props} = usePage<CheckoutPageProps>();
 const membership = computed(() => props.membership);
 const clientSecret = computed(() => props.clientSecret);
+const user = props.auth.user.roles[0].name === 'user'?props.auth.user:null;
 
 //stripe key expuesto desde las variables de entorno del proyecto
 const stripeKey = import.meta.env.VITE_STRIPE_KEY;
@@ -63,13 +64,13 @@ onMounted(async () =>{
 });
 
 //datos iniciales del formulario
-const name = ref('');
+const name = ref(user?.name??'');
 const nameError = ref('');
 
-const email = ref('');
+const email = ref(user?.email??'');
 const emailError = ref('');
 
-const phone = ref('');
+const phone = ref(user?.phone??'');
 const phoneError = ref('');
 
 const message = ref('');
