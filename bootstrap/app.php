@@ -20,14 +20,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
         
-        $middleware->redirectUsersTo(function () {
-            $user = auth()->user();
+        // $middleware->redirectUsersTo(function () {
+        //     $user = auth()->user();
 
-            if(!$user) return null;
-            if ($user->hasRole('admin'))return '/dashboard';
+        //     if(!$user) return null;
+        //     if ($user->hasRole('admin'))return '/dashboard';
             
-            return '/player';
-        });
+        //     return '/player';
+        // });
 
 
         $middleware->alias([
