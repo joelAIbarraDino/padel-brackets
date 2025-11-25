@@ -22,7 +22,7 @@ const menuOpen = ref(false);
 <template>
 
     <header>
-        <div class="fixed top-5 right-5 bg-secondary text-primary p-5 rounded-sm transition hover:bg-primary hover:text-secondary z-10" @click="menuOpen = true"><Menu/></div>    
+        <div class="fixed top-5 right-5 bg-secondary text-primary p-5 rounded-sm transition hover:bg-primary hover:text-secondary z-30" @click="menuOpen = true"><Menu/></div>    
         <HomeNav :open="menuOpen" :pages="pages" :social-media="socialMedia" @close="menuOpen = false"/>
     </header>
 

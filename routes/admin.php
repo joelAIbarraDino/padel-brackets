@@ -48,4 +48,6 @@ Route::middleware('auth', 'role:admin', 'verified')->group(function(){
     Route::get('/places/{place}', [PlacesController::class, 'show'])->name('places.show');
     Route::get('/places/{place}/edit', [PlacesController::class, 'edit'])->name('places.edit');
     Route::put('/places/{place}', [PlacesController::class, 'update'])->name('places.update');
+    Route::get('/places/{place}/reschedule', [PlacesController::class, 'reschedule'])->name('places.reschedule');
+    Route::put('/places/reschedule/{place}', [PlacesController::class, 'storeReschedule'])->name('places.storeReschedule');
 });

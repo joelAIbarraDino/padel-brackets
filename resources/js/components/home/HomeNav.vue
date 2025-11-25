@@ -36,7 +36,7 @@ const isAdmin = computed(() => {
     <transition name="slide-vertical">
         <div 
             v-if="props.open"
-            class="bg-primary w-full h-screen fixed inset-0 z-20"
+            class="bg-primary w-full h-screen fixed inset-0 z-40"
         >
 
             <div class="absolute top-0 left-0 w-full p-5 flex items-center justify-between">

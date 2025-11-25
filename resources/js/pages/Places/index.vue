@@ -8,7 +8,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Head, usePage, Link } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue';
 import Button from '@/components/ui/button/Button.vue';
-import { Eye, ArrowLeft, Trophy } from "lucide-vue-next";
+import { CalendarSync, ArrowLeft, Trophy } from "lucide-vue-next";
 import {computed } from 'vue';
 import "vue3-tournament/style.css"
 
@@ -20,8 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const columnsName = [
     "Jugador", 
-    "Estatus", 
-    "Acciones"
+    "Estatus"
 ];
 
 interface TournamentPageProps extends AppPageProps{
@@ -101,15 +100,15 @@ const rounds = computed(() => {
                             <TableCell>{{ place.user?.name || 'Sin jugador' }}</TableCell>
                             <TableCell>{{ place.status }}</TableCell>
 
-                            <TableActions>
+                            <!-- <TableActions>
                                 <TableRecordButton
                                     type="url"
                                     color="bg-violet-700"
                                     hover="bg-violet-600"
-                                    :icon=Eye
-                                    :action="`#`"
+                                    :icon=CalendarSync
+                                    :action="`/places/${place.id}/reschedule`"
                                 />
-                            </TableActions>
+                            </TableActions> -->
                         </TableRow>
                     </TableRecords>
                 </TabsContent>

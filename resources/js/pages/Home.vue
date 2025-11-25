@@ -40,7 +40,7 @@ const memberships = computed(() => props.memberships);
     <Head title="Padel"></Head>
 
     <PublicAppLayout>
-        
+
         <section class="relative w-full h-screen bg-[url('@/assets/slider.jpg')] bg-no-repeat bg-cover bg-top-left">
             <Link href="/">
                 <img src="@/assets/logo.jpg" alt="Logo de página de torneo de padel" class="w-1/4 md:w-1/6 transition hover:opacity-90 absolute top-5 left-5">
@@ -80,8 +80,8 @@ const memberships = computed(() => props.memberships);
 
         </section>
 
-        <section class="bg-primary flex flex-col md:flex-row">
-            <img src="@/assets/why-us.jpg" class="h-full w-full md:w-1/2">
+        <section class="bg-primary flex flex-col lg:flex-row">
+            <img src="@/assets/why-us.jpg" class="h-full w-full lg:w-1/2">
 
             <div class="flex items-start justify-center flex-col font-home text-white py-10 px-5">
 
@@ -92,18 +92,18 @@ const memberships = computed(() => props.memberships);
 
                         <div class="flex items-center justify-start gap-10 mt-10">
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><FlameKindling :size="40"/></div>
-                            
+
                             <div>
                                 <h4 class="text-2xl font-black text-secondary">Área de grill</h4>
                                 <p class="text-lg">
-                                    Contamos con un espacio diseñado para disfrutar momentos inolvidables alrededor del fuego. 
+                                    Contamos con un espacio diseñado para disfrutar momentos inolvidables alrededor del fuego.
                                 </p>
                             </div>
                         </div>
 
                         <div class="flex items-center justify-start gap-10 mt-10">
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><WavesLadder :size="40"/></div>
-                            
+
                             <div>
                                 <h4 class="text-2xl font-black text-secondary">Alberca y jacuzzi</h4>
                                 <p class="text-lg">
@@ -114,7 +114,7 @@ const memberships = computed(() => props.memberships);
 
                         <div class="flex items-center justify-start gap-10 mt-10">
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><Thermometer :size="40"/></div>
-                            
+
                             <div>
                                 <h4 class="text-2xl font-black text-secondary">Sauna</h4>
                                 <p class="text-lg">
@@ -125,7 +125,7 @@ const memberships = computed(() => props.memberships);
 
                         <div class="flex items-center justify-start gap-10 mt-10">
                             <div class="rounded-full bg-secondary size-18 flex items-center justify-center text-primary"><ShowerHead :size="40"/></div>
-                            
+
                             <div>
                                 <h4 class="text-2xl font-black text-secondary">Regaderas</h4>
                                 <p class="text-lg">
@@ -140,8 +140,8 @@ const memberships = computed(() => props.memberships);
         </section>
 
         <section class="p-20 bg-white">
-            <HomeTitleSection 
-                title="Tipo de torneos" 
+            <HomeTitleSection
+                title="Tipo de torneos"
                 subtitle="Torneos únicos, pensados para cada tipo de jugador"
             />
 
@@ -195,7 +195,7 @@ const memberships = computed(() => props.memberships);
         </section>
 
         <section class="py-35 px-20 bg-white">
-            <HomeTitleSection 
+            <HomeTitleSection
                 title="Aprovecha las membresías que tenemos para ti"
             />
 
@@ -208,7 +208,7 @@ const memberships = computed(() => props.memberships);
                 :autoplay="{
                     delay: 3000
                 }"
-                :pagination="{ 
+                :pagination="{
                     el: '.swiper-pagination',
                     clickable: true
                 }"
@@ -236,17 +236,17 @@ const memberships = computed(() => props.memberships);
                 </SwiperSlide>
                 <div class="swiper-pagination mt-30"></div>
             </Swiper>
-            
-            
+
+
         </section>
-        
+
         <section class="bg-black p-20">
-            <h2 class="lg:text-7xl md:text-6xl text-4xl font-home font-bold uppercase text-center text-white">Síguenos en <span class="text-secondary">#lomas_pádel</span></h2>        
+            <h2 class="lg:text-7xl md:text-6xl text-4xl font-home font-bold uppercase text-center text-white">Síguenos en <span class="text-secondary">#lomas_pádel</span></h2>
         </section>
-    
-        
+
+
     </PublicAppLayout>
-    
+
 </template>
 
 <style scoped>

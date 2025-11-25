@@ -20,6 +20,22 @@ class PlacesController extends Controller
         ]);
     }
 
+    public function reschedule(Places $place)
+    {
+        $tournaments = Tournament::where('status', '=', 'activo')
+                        ->where('id', '!=', $place->id_tournament)
+                        ->get();
+
+        if ($tournaments->count() === 0) {
+            return redirect()->back()->with('error', 'No se puede reagendar porque no existen otros torneos activos.');
+        }
+        
+        return Inertia::render('Places/reschedule', [
+            'place' => $place,
+            'tournaments' => $tournaments
+        ]);
+    }
+
     /**
      * Display the specified resource.
      */
