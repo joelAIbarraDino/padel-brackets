@@ -90,7 +90,7 @@ const rounds = computed(() => {
                 <TabsContent value="grafic">
                   <TournamentBracket
                       :places="places" 
-                      base-url="/places/view/"
+                      base-url="#"
                   />
                 </TabsContent>
 
@@ -100,7 +100,7 @@ const rounds = computed(() => {
                             <TableCell>{{ place.user?.name || 'Sin jugador' }}</TableCell>
                             <TableCell>{{ place.status }}</TableCell>
 
-                            <!-- <TableActions>
+                            <TableActions>
                                 <TableRecordButton
                                     type="url"
                                     color="bg-violet-700"
@@ -108,7 +108,7 @@ const rounds = computed(() => {
                                     :icon=CalendarSync
                                     :action="`/places/${place.id}/reschedule`"
                                 />
-                            </TableActions> -->
+                            </TableActions>
                         </TableRow>
                     </TableRecords>
                 </TabsContent>

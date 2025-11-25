@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Places;
 use App\Models\Tournament;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class PlacesController extends Controller
@@ -35,6 +37,47 @@ class PlacesController extends Controller
             'tournaments' => $tournaments
         ]);
     }
+
+    public function storeReschedule(Request $request, Places $place)
+    {
+        DB::transaction(function () use ($request, $place) {
+
+            // Buscar el torneo nuevo
+            $newTournament = Tournament::find($request->tournament);
+
+            if (!$newTournament) {
+                throw ValidationException::withMessages([
+                    'tournament' => 'No se encontró el torneo seleccionado.'
+                ]);
+            }
+
+            $newPlace = Places::where('id_tournament', $newTournament->id)
+                                ->where('status', 'libre')
+                                ->lockForUpdate()
+                                ->first();
+
+            if (!$newPlace) {
+                throw ValidationException::withMessages([
+                    'tournament' => 'No hay lugares disponibles en este torneo.'
+                ]);
+            }
+
+            // Asignar el nuevo lugar
+            $newPlace->id_user = $request->client;
+            $newPlace->id_payment = $place->id_payment;
+            $newPlace->status = 'ocupado';
+            $newPlace->save();
+
+            // Liberar el lugar anterior
+            $place->id_user = null;
+            $place->id_payment = null;
+            $place->status = 'libre';
+            $place->save();
+        });
+
+        return redirect('/places/' . $place->id_tournament);
+    }
+
 
     /**
      * Display the specified resource.

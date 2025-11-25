@@ -27,7 +27,8 @@ const tournaments = computed(() => props.tournaments);
 const currentTournamentID = place.value.id_tournament;
 
 const form = useForm({
-  tournament:undefined
+  tournament:undefined,
+  client: place.value.id_user
 });
 
 function submit(){
@@ -47,9 +48,9 @@ function submit(){
         <RecordFormBody  :handle="submit">
 
             <div class="grid gap-1">
-              <Label for="type">Cambiar torneo</Label>
+              <Label for="tournament">Cambiar torneo</Label>
 
-              <Select v-model="form.tournament" class="px-3 py-2 dark:text-white dark:bg-zinc-900" id="type">
+              <Select v-model="form.tournament" class="px-3 py-2 dark:text-white dark:bg-zinc-900" id="tournament">
                 <SelectTrigger>
                     <SelectValue placeholder="Selecciona un nuevo torneo"/>
                 </SelectTrigger>
