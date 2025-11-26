@@ -21,9 +21,8 @@ class TournamentController extends Controller
         $now = Carbon::now();
 
         $startOfMonth = $now->copy()->startOfMonth();
-        $endOfMonth = $now->copy()->endOfMonth();
 
-        $tournamentsCalendar = Tournament::whereBetween('scheduled_event', [$startOfMonth, $endOfMonth])
+        $tournamentsCalendar = Tournament::where('scheduled_event', '>=', $startOfMonth)
             ->get()->map(function($tournament){
                 return[
                     'title'=>'Torneo #'.$tournament->id,

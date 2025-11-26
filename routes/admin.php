@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TypeTournamentController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TournamentController;
@@ -50,4 +51,14 @@ Route::middleware('auth', 'role:admin', 'verified')->group(function(){
     Route::put('/places/{place}', [PlacesController::class, 'update'])->name('places.update');
     Route::get('/places/{place}/reschedule', [PlacesController::class, 'reschedule'])->name('places.reschedule');
     Route::put('/places/reschedule/{place}', [PlacesController::class, 'storeReschedule'])->name('places.storeReschedule');
+});
+
+Route::middleware('auth', 'role:admin', 'verified')->group(function(){
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/{admin}', [AdminController::class, 'show'])->name('admin.show');
+    Route::get('/admin/{admin}/edit', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::put('/admin/{admin}', [AdminController::class, 'update'])->name('admin.update');
+    Route::delete('/admin/{admin}', [AdminController::class, 'destroy'])->name('admin.destroy');
 });
