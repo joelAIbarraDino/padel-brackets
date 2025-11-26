@@ -15,7 +15,7 @@ class PublicController extends Controller
         $now = Carbon::now();
 
         $startOfMonth = $now->copy()->startOfMonth();
-        $endOfMonth = $now->copy()->endOfMonth();
+    
 
         $tournaments = Tournament::where('scheduled_event', '>=', $startOfMonth)
             ->get()->map(function($tournament){
