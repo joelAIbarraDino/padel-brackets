@@ -41,7 +41,7 @@ class PublicController extends Controller
         $startOfMonth = $now->copy()->startOfMonth();
         $endOfMonth = $now->copy()->endOfMonth();
 
-        $tournaments = Tournament::whereBetween('scheduled_event', [$startOfMonth, $endOfMonth])
+        $tournaments = Tournament::where('scheduled_event', '>=', $startOfMonth)
             ->get()->map(function($tournament){
                 return[
                     'title'=>'Torneo #'.$tournament->id,
