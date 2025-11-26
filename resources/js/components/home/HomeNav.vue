@@ -39,9 +39,9 @@ const isAdmin = computed(() => {
             class="bg-primary w-full h-screen fixed inset-0 z-40"
         >
 
-            <div class="absolute top-0 left-0 w-full p-5 flex items-center justify-between">
+            <div class="absolute top-0 left-0 w-full p-5 flex items-start justify-between">
                 <Link href="/">
-                    <img src="@/assets/logo.jpg" alt="Logo de página de torneo de padel" class="w-1/4 md:w-1/6 transition hover:opacity-90">
+                    <img src="@/assets/logo_padel_blanco.png" alt="Logo de página de torneo de padel" class="w-1/4 md:w-1/6 lg:w-1/12 transition hover:opacity-90">
                 </Link>
                 
                 <div class="bg-secondary text-primary hover:text-red-700 p-5 transition" @click="closeMenu">

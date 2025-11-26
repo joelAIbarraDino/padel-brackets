@@ -45,7 +45,7 @@ const memberships = computed(() => props.memberships);
 
             <!-- Video de fondo (con poster para carga rápida) -->
             <video
-                src="@/assets/slider-video.mp4"
+                src="@/assets/slider-video2.mp4"
                 poster="@/assets/slider.jpg"
                 autoplay
                 muted
@@ -55,16 +55,16 @@ const memberships = computed(() => props.memberships);
             ></video>
 
             <!-- Capa oscura para contraste -->
-            <div class="absolute inset-0 bg-black/40"></div>
+            <!-- <div class="absolute inset-0 bg-black/5"></div> -->
 
             <!-- Logo -->
-            <Link href="/">
+            <!-- <Link href="/">
                 <img
                     src="@/assets/logo.jpg"
                     alt="Logo"
                     class="w-1/4 md:w-1/6 transition hover:opacity-90 absolute top-5 left-5 z-20"
                 />
-            </Link>
+            </Link> -->
 
             <!-- Contenido del Hero -->
             <div class="absolute inset-0 flex items-center justify-end z-20">
