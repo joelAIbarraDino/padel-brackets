@@ -58,7 +58,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="current-password"
-                            placeholder="Current password"
+                            placeholder="Contraseña actual"
                         />
                         <InputError :message="errors.current_password" />
                     </div>
@@ -72,7 +72,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="new-password"
-                            placeholder="New password"
+                            placeholder="Nueva contraseña"
                         />
                         <InputError :message="errors.password" />
                     </div>
@@ -87,7 +87,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                             type="password"
                             class="mt-1 block w-full"
                             autocomplete="new-password"
-                            placeholder="Confirm password"
+                            placeholder="Confirmar contraseña"
                         />
                         <InputError :message="errors.password_confirmation" />
                     </div>
@@ -109,7 +109,7 @@ const currentPasswordInput = ref<HTMLInputElement | null>(null);
                                 v-show="recentlySuccessful"
                                 class="text-sm text-neutral-600"
                             >
-                                Saved.
+                                Guardado.
                             </p>
                         </Transition>
                     </div>

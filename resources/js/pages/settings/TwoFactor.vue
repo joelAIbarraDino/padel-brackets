@@ -65,7 +65,7 @@ onUnmounted(() => {
                             v-if="hasSetupData"
                             @click="showSetupModal = true"
                         >
-                            <ShieldCheck />Continue Setup
+                            <ShieldCheck />Continuar Configuración
                         </Button>
                         <Form
                             v-else
@@ -101,7 +101,7 @@ onUnmounted(() => {
                                 :disabled="processing"
                             >
                                 <ShieldBan />
-                                Disable 2FA
+                                Desactivar 2FA
                             </Button>
                         </Form>
                     </div>
