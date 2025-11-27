@@ -20,14 +20,18 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
         
-        // $middleware->redirectUsersTo(function () {
-        //     $user = auth()->user();
+        $middleware->redirectUsersTo(function (Request $request) {
+            // NO REDIRIGIR si está en proceso de 2FA
+            if ($request->is('two-factor-challenge') || $request->is('two-factor-challenge/*')) {
+                return null;
+            }
 
-        //     if(!$user) return null;
-        //     if ($user->hasRole('admin'))return '/dashboard';
-            
-        //     return '/player';
-        // });
+            if ($request->user()?->hasRole('admin')) {
+                return '/dashboard';
+            }
+
+            return '/player';
+        });
 
 
         $middleware->alias([
