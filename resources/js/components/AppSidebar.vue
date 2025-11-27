@@ -2,7 +2,7 @@
 // import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
-import { Medal, Trophy, Group, Users, Sparkles, Badge, House, Laptop, CalendarDays } from 'lucide-vue-next';
+import { Medal, Trophy, Group, Users, User, Sparkles, Badge, House, Laptop, CalendarDays, ShieldUser } from 'lucide-vue-next';
 import {
     Sidebar,
     SidebarContent,
@@ -62,24 +62,19 @@ const mainNavItemsAdmin = [
             },
         ]
     },
-    // {
-    //     title: "Usuarios",
-    //     url: "#",
-    //     icon: Users,
-    //     isActive: false,
-    //     items: [
-    //         {
-    //             title: "Torneos registrados",
-    //             url: "/tournaments",
-    //             icon: Medal
-    //         },
-    //         {
-    //             title: 'Tipo de torneos',
-    //             url: '/type-tournaments',
-    //             icon: Group
-    //         },
-    //     ]
-    // },
+    {
+        title: "Usuarios",
+        url: "#",
+        icon: Users,
+        isActive: false,
+        items: [
+            {
+                title: "Supervisores",
+                url: "/supervisor",
+                icon: ShieldUser
+            }
+        ]
+    },
 ];
 
 const mainNavItemsPlayer = [

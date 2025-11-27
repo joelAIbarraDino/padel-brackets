@@ -1,26 +1,34 @@
 <script setup lang="ts">
 
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { BreadcrumbItem } from '@/types';
+import { AppPageProps, BreadcrumbItem, User } from '@/types';
 import { RecordForm, RecordFormBody, RecordFormHeader, RecordFormSubmit } from '@/components/recordForm';
+import { computed } from 'vue';
+
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {title:"Supervisores", href:"/admin"},
-    {title:"Crear", href:"#"}
+    {title:"Supervisores", href:"/supervisor"},
+    {title:"Editar", href:"#"}
 ];
 
+interface SupervisorPageProps extends AppPageProps{
+    supervisor:User
+}
+
+const {props} = usePage<SupervisorPageProps>();
+const supervisor = computed(() => props.supervisor);
+
 const form = useForm({
-  name:'',
-  email:'',
-  password:''
+  name:supervisor.value.name,
+  email:supervisor.value.email
 });
 
 function submit(){
-  form.post('/memberships',{
+  form.put(`/supervisor/${supervisor.value.id}`,{
     preserveScroll:true,
     onSuccess: () => form.reset()
   })
@@ -29,10 +37,10 @@ function submit(){
 </script>
 
 <template>
-    <Head title="Nueva membresía"/>
+    <Head title="Editar supervisor"/>
     <AppLayout :breadcrumbs="breadcrumbs">
       <RecordForm>
-        <RecordFormHeader title-form="Nueva membresía" return-url="/memberships"/>
+        <RecordFormHeader title-form="Editar supervisor" return-url="/supervisor"/>
         <RecordFormBody  :handle="submit">
             
             <div class="grid gap-1">
@@ -42,7 +50,7 @@ function submit(){
                   type="text"
                   class="mt-1 block w-full"
                   v-model="form.name"
-                  placeholder="Nombre de mebresía"
+                  placeholder="Nombre de supervisor"
               />
               <InputError class="mt-1" :message="form.errors.name" />
             </div>
@@ -54,21 +62,9 @@ function submit(){
                   type="email"
                   class="mt-1 block w-full"
                   v-model="form.email"
-                  placeholder="Correo de usuario"
+                  placeholder="Correo de supervisor"
               />
               <InputError class="mt-1" :message="form.errors.email" />
-            </div>
-
-            <div class="grid gap-1">
-              <Label for="password">Contraseña</Label>
-              <Input
-                  id="password"
-                  type="password"
-                  class="mt-1 block w-full"
-                  v-model="form.password"
-                  placeholder="Correo de usuario"
-              />
-              <InputError class="mt-1" :message="form.errors.password" />
             </div>
 
             <RecordFormSubmit/>

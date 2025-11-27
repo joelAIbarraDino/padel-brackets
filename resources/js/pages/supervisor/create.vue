@@ -1,36 +1,27 @@
 <script setup lang="ts">
 
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import InputError from '@/components/InputError.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Input } from '@/components/ui/input';
-import { Textarea } from "@/components/ui/textarea"
 import { Label } from '@/components/ui/label';
-import { AppPageProps, BreadcrumbItem, Membership } from '@/types';
+import { BreadcrumbItem } from '@/types';
 import { RecordForm, RecordFormBody, RecordFormHeader, RecordFormSubmit } from '@/components/recordForm';
-import { NumberField, NumberFieldContent, NumberFieldDecrement, NumberFieldIncrement, NumberFieldInput } from "@/components/ui/number-field"
-import { computed } from 'vue';
-import password from '@/routes/password';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {title:"Supervisores", href:"/memberships"},
-    {title:"Editar", href:"#"}
+    {title:"Supervisores", href:"/supervisor"},
+    {title:"Crear", href:"#"}
 ];
 
-interface MembershipsPageProps extends AppPageProps{
-    membership:Membership
-}
-
-const {props} = usePage<MembershipsPageProps>();
-const membership = computed(() => props.membership);
-
 const form = useForm({
-  name:membership.value.name,
-  email:membership.value.description
+  name:'',
+  email:'',
+  password:'',
+  password_confirmation:''
 });
 
 function submit(){
-  form.put(`/memberships/${membership.value.id}`,{
+  form.post('/supervisor',{
     preserveScroll:true,
     onSuccess: () => form.reset()
   })
@@ -39,10 +30,10 @@ function submit(){
 </script>
 
 <template>
-    <Head title="Nueva membresía"/>
+    <Head title="Nuevo supervisor"/>
     <AppLayout :breadcrumbs="breadcrumbs">
       <RecordForm>
-        <RecordFormHeader title-form="Nueva membresía" return-url="/memberships"/>
+        <RecordFormHeader title-form="Nuevo supervisor" return-url="/supervisor"/>
         <RecordFormBody  :handle="submit">
             
             <div class="grid gap-1">
@@ -67,6 +58,30 @@ function submit(){
                   placeholder="Correo de usuario"
               />
               <InputError class="mt-1" :message="form.errors.email" />
+            </div>
+
+            <div class="grid gap-1">
+              <Label for="password">Contraseña</Label>
+              <Input
+                  id="password"
+                  type="password"
+                  class="mt-1 block w-full"
+                  v-model="form.password"
+                  placeholder="Correo de usuario"
+              />
+              <InputError class="mt-1" :message="form.errors.password" />
+            </div>
+
+            <div class="grid gap-1">
+              <Label for="password_confirmation">Confirmar contraseña</Label>
+              <Input
+                  id="password_confirmation"
+                  type="password"
+                  class="mt-1 block w-full"
+                  v-model="form.password_confirmation"
+                  placeholder="Correo de usuario"
+              />
+              <InputError class="mt-1" :message="form.errors.password_confirmation" />
             </div>
 
             <RecordFormSubmit/>

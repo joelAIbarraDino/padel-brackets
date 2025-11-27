@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TypeTournamentController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TournamentController;
+use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PlacesController;
 use Illuminate\Support\Facades\Route;
@@ -54,11 +54,11 @@ Route::middleware('auth', 'role:admin', 'verified')->group(function(){
 });
 
 Route::middleware('auth', 'role:admin', 'verified')->group(function(){
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');
-    Route::post('/admin', [AdminController::class, 'store'])->name('admin.store');
-    Route::get('/admin/{admin}', [AdminController::class, 'show'])->name('admin.show');
-    Route::get('/admin/{admin}/edit', [AdminController::class, 'edit'])->name('admin.edit');
-    Route::put('/admin/{admin}', [AdminController::class, 'update'])->name('admin.update');
-    Route::delete('/admin/{admin}', [AdminController::class, 'destroy'])->name('admin.destroy');
+    Route::get('/supervisor', [SupervisorController::class, 'index'])->name('supervisor.index');
+    Route::get('/supervisor/create', [SupervisorController::class, 'create'])->name('supervisor.create');
+    Route::post('/supervisor', [SupervisorController::class, 'store'])->name('supervisor.store');
+    Route::get('/supervisor/{supervisor}', [SupervisorController::class, 'show'])->name('supervisor.show');
+    Route::get('/supervisor/{supervisor}/edit', [SupervisorController::class, 'edit'])->name('supervisor.edit');
+    Route::put('/supervisor/{supervisor}', [SupervisorController::class, 'update'])->name('supervisor.update');
+    Route::delete('/supervisor/{supervisor}', [SupervisorController::class, 'destroy'])->name('supervisor.destroy');
 });
