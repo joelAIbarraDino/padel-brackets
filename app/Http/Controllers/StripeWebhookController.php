@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\AdminTypes;
 use App\Mail\PaymentSuccessMail;
+use App\Mail\UserWelcomeMail;
 use App\Models\Memberships;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
@@ -14,6 +15,7 @@ use App\Models\Subscriptions;
 use App\Models\User;
 use App\PDF\ComprobantePago;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -85,16 +87,22 @@ class StripeWebhookController extends Controller
                 return response()->json(['error' => 'No billing email'], 400);
             }
 
+            $temporaryPassword = Str::password(12);
+            
             $user = User::firstOrCreate(
                 ['email' => $email],
                 
                 [
                     'name' => $name, 
                     'phone'=>$phone,
-                    'role' => 'user',
-                    'password' => Str::password()
+                    'password' => Hash::make($temporaryPassword)
                 ]
             );
+
+            $user->assignRole('user');
+
+            if($user->wasRecentlyCreated)
+                Mail::to($user->email)->send(new UserWelcomeMail($user, $temporaryPassword, true));
 
             switch($productType){
                 case 'tournament':

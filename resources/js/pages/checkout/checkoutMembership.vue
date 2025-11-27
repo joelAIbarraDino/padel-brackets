@@ -19,7 +19,7 @@ interface CheckoutPageProps extends AppPageProps{
 const {props} = usePage<CheckoutPageProps>();
 const membership = computed(() => props.membership);
 const clientSecret = computed(() => props.clientSecret);
-const user = props.auth.user.roles[0].name === 'user'?props.auth.user:null;
+const user = props.auth.user;
 
 //stripe key expuesto desde las variables de entorno del proyecto
 const stripeKey = import.meta.env.VITE_STRIPE_KEY;
